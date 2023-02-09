@@ -19,7 +19,7 @@ BACKEND = backend.o
 
 # Backend temporary files
 BACKENDFILES =	$(TEMPDIR)/User.o \
-				 
+				$(TEMPDIR)/List.o 
 
 # Objective temporary files
 FILES =	$(BACKENDFILES) \
@@ -46,8 +46,8 @@ $(TEMPDIR):
 	mkdir $(TEMPDIR)
 
 # The backend binary depends of backend files
-$(BACKEND): $(TEMPDIR)/backend.o
-	$(LINK) $(TEMPDIR)/backend.o -o $(BACKEND)
+$(BACKEND): $(BACKENDFILES) $(TEMPDIR)/backend.o
+	$(LINK) $(BACKENDFILES) $(TEMPDIR)/backend.o -o $(BACKEND)
 
 # The final binary depends of all temporary files
 $(BINARY): $(FILES)
