@@ -5,6 +5,7 @@ The members are:
     password: hash of the password
     description: Short description of the user, something like a bio
 */
+# include "user.h"
 # include "list.h"
 
 struct User

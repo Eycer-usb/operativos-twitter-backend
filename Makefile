@@ -18,12 +18,12 @@ BINARY = twitter.o
 BACKEND = backend.o
 
 # Backend temporary files
-BACKENDFILES =	$(TEMPDIR)/List.o \
-				$(TEMPDIR)/User.o 
+BACKENDFILES =	$(TEMPDIR)/User.o \
+				 
 
 # Objective temporary files
 FILES =	$(BACKENDFILES) \
-		$(TEMPDIR)/main.o
+		$(TEMPDIR)/backend.o
 
 
 # Arguments to makefile
@@ -46,7 +46,8 @@ $(TEMPDIR):
 	mkdir $(TEMPDIR)
 
 # The backend binary depends of backend files
-$(BACKEND): $(BACKENDFILES)
+$(BACKEND): $(TEMPDIR)/backend.o
+	$(LINK) $(TEMPDIR)/backend.o -o $(BACKEND)
 
 # The final binary depends of all temporary files
 $(BINARY): $(FILES)
@@ -58,6 +59,11 @@ $(TEMPDIR)/main.o:	$(TEMPDIR) \
 	$(COMPILE) $(SRCDIR)/main.c -o $(TEMPDIR)/main.o
 
 # Backend files
+# The backend main file
+$(TEMPDIR)/backend.o:	$(TEMPDIR) \
+						$(SRCDIR)/backend.c
+	$(COMPILE) $(SRCDIR)/backend.c -o $(TEMPDIR)/backend.o
+
 $(TEMPDIR)/List.o: 	$(TEMPDIR) \
 					$(SRCDIR)/list.h \
 					$(SRCDIR)/List.c
