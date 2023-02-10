@@ -2,7 +2,7 @@
 #define LIST_HEADER
 
 
-typedef union listContent listContent;
+typedef union listContent ListContent;
 typedef struct List List;
 
 #include <time.h>
@@ -16,10 +16,10 @@ union listContent
 struct List
 {
     List* next;
-    listContent content;
+    ListContent content;
     time_t time;
 };
 
-List listPush( List old, listContent content, time_t time);
+List listPush( List old, ListContent content, time_t time);
 
 #endif

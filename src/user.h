@@ -8,9 +8,12 @@ typedef struct User User;
 struct User
 {
     char username[20];
-    char password[20];
+    long int password;
     char description[255];
     List* follows;
 };
+
+int verifyPassword( User* user, char password[20] );
+void setPassword( User* user, char password[20] );
 
 #endif

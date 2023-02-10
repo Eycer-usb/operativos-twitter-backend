@@ -19,7 +19,8 @@ BACKEND = backend.o
 
 # Backend temporary files
 BACKENDFILES =	$(TEMPDIR)/User.o \
-				$(TEMPDIR)/List.o 
+				$(TEMPDIR)/List.o \
+				$(TEMPDIR)/HashTable.o 
 
 # Objective temporary files
 FILES =	$(BACKENDFILES) \
@@ -73,3 +74,8 @@ $(TEMPDIR)/User.o: 	$(TEMPDIR) \
 					$(SRCDIR)/user.h \
 					$(SRCDIR)/User.c
 	$(COMPILE) $(SRCDIR)/User.c -o $(TEMPDIR)/User.o
+
+$(TEMPDIR)/HashTable.o:	$(TEMPDIR) \
+						$(SRCDIR)/hashtable.h \
+						$(SRCDIR)/HashTable.c
+	$(COMPILE) $(SRCDIR)/HashTable.c -o $(TEMPDIR)/HashTable.o
