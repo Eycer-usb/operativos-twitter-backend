@@ -7,13 +7,29 @@ The members are:
 */
 #include "user.h"
 #include "hashtable.h"
+#include <time.h>
+#include <string.h>
+
+/*
+Initializate User Struct
+*/
+int initUser( User* user, char* username, char* password )
+{
+    // Tails Definition
+    user->follows = NULL;
+    user->tweets = NULL;
+    strcpy( user->username, username );
+    setPassword(user, password);
+    return 1;
+}
+
 /*
 Given a user and a password. The password is hashed and
 set as password.
 */
-void setPassword( User* user, char password[20] )
+void setPassword( User* user, char* password )
 {
-    (*user).password = hashFun( password ); // WIP
+    (*user).password = hashFun( password );
 }
 
 /*
@@ -23,5 +39,26 @@ corresponds to the stored hashed password, and 0 otherwise.
 int verifyPassword( User* user, char password[20] )
 {
     long int hashed = hashFun(password);
-    return (*user).password == hashed; //WIP
+    return (*user).password == hashed;
+}
+
+/*
+Add the followed to the follow list of the follower
+*/
+int follow( User* follower, User* followed )
+{
+    ListContent content;
+    content.user = followed;
+    listPush( follower->follows, content, time(NULL) );
+}
+
+/*
+Add a new tweet to the user tweet list
+*/
+//WIP
+int newTweet( User* user, char* text  )
+{
+    ListContent content;
+    strcpy( content.text, text);
+    listPush( user->follows, content, time(NULL) );
 }

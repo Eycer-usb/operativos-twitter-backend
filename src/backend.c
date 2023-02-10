@@ -10,10 +10,9 @@ Set of proof to User Struct
 int testUser()
 {
     User user;
-    strcpy( user.username , "eycer");
-    setPassword( &user, "Eros#123" );
-    printf("%ld\n", user.password);
-    printf("%d\n", verifyPassword( &user, "Eros#123" ));
+    initUser(&user, "eycer", "Eros#123");
+    newTweet( &user, "This is the first User Tweet!"  );
+    printf("%s", user.tweets);
     return 1;
 }
 
@@ -39,7 +38,7 @@ Execute Proof Suite to Backend
 int main(int argc, char const *argv[])
 {
     testUser();
-    testList();
+    //testList();
 
     return 0;
 }

@@ -11,7 +11,7 @@ typedef struct List List;
 union listContent
 {
     User* user;
-    char text[280];
+    char* text;
 };
 struct List
 {
@@ -20,6 +20,6 @@ struct List
     time_t time;
 };
 
-List listPush( List old, ListContent content, time_t time);
+List listPush( List* old, ListContent content, time_t time);
 
 #endif
