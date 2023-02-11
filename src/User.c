@@ -5,10 +5,12 @@ The members are:
     password: hash of the password
     description: Short description of the user, something like a bio
 */
-#include "user.h"
-#include "hashtable.h"
+#include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include "user.h"
+#include "hashtable.h"
+
 
 /*
 Initializate User Struct
@@ -47,9 +49,9 @@ Add the followed to the follow list of the follower
 */
 int follow( User* follower, User* followed )
 {
-    ListContent content;
-    content.user = followed;
-    listPush( follower->follows, content, time(NULL) );
+    ListContent* content = (ListContent*) malloc(sizeof(ListContent));
+    content->user = followed;
+    follower->follows = listPush( follower->follows, content, time(NULL) );
 }
 
 /*
@@ -58,7 +60,8 @@ Add a new tweet to the user tweet list
 //WIP
 int newTweet( User* user, char* text  )
 {
-    ListContent content;
-    strcpy( content.text, text);
-    listPush( user->follows, content, time(NULL) );
+    ListContent* content = (ListContent*) malloc(sizeof(ListContent));
+    content->text = text;
+    user->tweets = listPush( user->tweets, content, time(NULL) );
+    return 1;
 }

@@ -16,10 +16,10 @@ union listContent
 struct List
 {
     List* next;
-    ListContent content;
+    ListContent* content;
     time_t time;
 };
 
-List listPush( List* old, ListContent content, time_t time);
+List* listPush( List* old, ListContent* content, time_t time);
 
 #endif

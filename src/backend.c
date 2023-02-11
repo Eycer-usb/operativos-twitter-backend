@@ -12,7 +12,7 @@ int testUser()
     User user;
     initUser(&user, "eycer", "Eros#123");
     newTweet( &user, "This is the first User Tweet!"  );
-    printf("%s", user.tweets);
+    printf("%s", user.tweets->content->text);
     return 1;
 }
 
@@ -24,11 +24,11 @@ int testList()
     List l;
     l.next = NULL;
     l.time = time(NULL);
-    strcpy(l.content.text, "This is the first tweet ever!");
+    strcpy(l.content->text, "This is the first tweet ever!");
     //printf("%s\n", u.username);
     printf("%p\n", l.next);
     printf("%ld\n", l.time);
-    printf("%s\n", l.content.text);
+    printf("%s\n", l.content->text);
     return 1;
 }
 
