@@ -3,6 +3,7 @@
 #include <string.h>
 #include "user.h"
 #include "list.h"
+#include "frontend.h"
 
 /*
 Set of proof to User Struct
@@ -13,6 +14,17 @@ int testUser()
     initUser(&user, "eycer", "Eros#123");
     newTweet( &user, "This is the first User Tweet!"  );
     printf("%s", user.tweets->content->text);
+    return 1;
+}
+
+/*
+*/
+int testInterface()
+{   
+    User user;
+    initUser(&user, "eycer", "Eros#123");
+    newTweet(&user, "This is the first User Tweet!"  );
+    printImage(user);
     return 1;
 }
 
@@ -38,6 +50,7 @@ Execute Proof Suite to Backend
 int main(int argc, char const *argv[])
 {
     testUser();
+    testInterface();
     //testList();
 
     return 0;
