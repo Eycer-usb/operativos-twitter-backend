@@ -3,7 +3,8 @@
 
 #include "user.h"
 
-void printImage (User user);
-void printTwitts (User user);
+int logger();
+void printImage(User user);
+void printTwitts(User user);
 
 #endif

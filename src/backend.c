@@ -4,6 +4,7 @@
 #include "user.h"
 #include "list.h"
 #include "frontend.h"
+#include <conio.h> // eliminar
 
 /*
 Set of proof to User Struct
@@ -49,9 +50,8 @@ Execute Proof Suite to Backend
 */
 int main(int argc, char const *argv[])
 {
-    testUser();
-    testInterface();
-    //testList();
+    logger();
 
+    getch(); // eliminar
     return 0;
 }
