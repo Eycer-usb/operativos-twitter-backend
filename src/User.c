@@ -7,6 +7,7 @@ The members are:
 */
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h>
 #include <string.h>
 #include "user.h"
 #include "hashtable.h"
@@ -18,8 +19,10 @@ Initializate User Struct
 int initUser( User* user, char* username, char* password )
 {
     // Tails Definition
-    user->follows = NULL;
-    user->tweets = NULL;
+    user->follows = (List*) malloc(sizeof(List));
+    user->tweets = (List*) malloc(sizeof(List));
+    initList(user->follows);
+    initList(user->tweets);
     strcpy( user->username, username );
     setPassword(user, password);
     return 1;
@@ -52,6 +55,7 @@ int follow( User* follower, User* followed )
     ListContent* content = (ListContent*) malloc(sizeof(ListContent));
     content->user = followed;
     follower->follows = listPush( follower->follows, content, time(NULL) );
+    return 1;
 }
 
 /*
@@ -61,7 +65,31 @@ Add a new tweet to the user tweet list
 int newTweet( User* user, char* text  )
 {
     ListContent* content = (ListContent*) malloc(sizeof(ListContent));
-    content->text = text;
+    content->text = (char*) malloc(sizeof(char)*255);
+    strcpy(content->text, text);
     user->tweets = listPush( user->tweets, content, time(NULL) );
     return 1;
 }
+
+
+List* getUserTimeLine(User* user)
+{
+    // Memory alocation to store the merged list
+    List* outList = (List*) malloc(sizeof(List));
+    initList(outList);
+    List* follow_i = user->follows;
+    while (follow_i->next)
+    {
+        if(mergeListByTimeOrder( follow_i->content->user->tweets, &outList ))
+        {
+            follow_i = follow_i->next;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    return outList;
+    
+}
+

@@ -20,6 +20,10 @@ struct List
     time_t time;
 };
 
+int initList( List* list );
 List* listPush( List* old, ListContent* content, time_t time);
+int getSavedDateTime( List* list, char* buffer );
+int mergeListByTimeOrder(List* oneList, List** outList);
+void printList(List* list);
 
 #endif

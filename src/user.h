@@ -18,6 +18,7 @@ void setPassword( User* user, char* password );
 int verifyPassword( User* user, char* password );
 int follow( User* follower, User* fillowed );
 int newTweet( User* user, char* text  );
+List* getUserTimeLine( User* user );
 
 
 #endif
