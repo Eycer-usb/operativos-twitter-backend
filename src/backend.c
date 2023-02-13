@@ -16,20 +16,12 @@ int testUser()
     newTweet( &user, "This is the second User Tweet!"  );
     newTweet( &user, "This is the last User Tweet!"  );
 
-    // Moving over a tweet list (the following list is analogous)
-    List* i = user.tweets;
-    while (i)
-    {
-        char buffer_time[10];
-        getSavedDateTime(i, buffer_time);
-        printf("%s\n", i->content->text);
-        printf("%s\n", buffer_time);
-        i = i->next;
-    }
-    
     return 1;
 }
 
+/*
+This function is an example for generate timeline of tweets
+*/
 int testTimeLine()
 {
     User eycer, cesar, blanyer;
@@ -66,7 +58,6 @@ int testList()
     l.next = NULL;
     l.time = time(NULL);
     strcpy(l.content->text, "This is the first tweet ever!");
-    //printf("%s\n", u.username);
     printf("%p\n", l.next);
     printf("%ld\n", l.time);
     printf("%s\n", l.content->text);

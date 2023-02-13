@@ -4,23 +4,33 @@
 #include <stdio.h>
 #include <time.h>
 
+/*
+Initializate a List Node
+*/
 int initList(List* list)
 {
+    list->owner = NULL;
     list->content = NULL;
     list->next = NULL;
     list->time = -1;
 }
 
-List* listPush( List* old, ListContent* content, time_t time)
+/*
+Add a node List at the start of the old List
+*/
+List* listPush( List* old, ListContent* content, time_t time, char* owner)
 {
     List* new = (List*) malloc(sizeof(List));
     new->next = old;
     new->content = content;
     new->time = time;
+    new->owner = owner;
     return new;
 };
 
-
+/*
+Given a List store Datetime formated in buffer
+*/
 int getSavedDateTime( List* list, char* buffer )
 {
     time_t timer = (list->time);
@@ -31,6 +41,10 @@ int getSavedDateTime( List* list, char* buffer )
     return 1;
 }
 
+/*
+Given a list, printlist will print element by element including
+the ENDLIST node
+*/
 void printList(List* list)
 {
     List* i = list;
@@ -45,6 +59,7 @@ void printList(List* list)
         {
             char buffer_time[17];
             getSavedDateTime(i, buffer_time);
+            printf("%s\n", i->owner);
             printf("%s\n", i->content->text);
             printf("%s\n", buffer_time);    
         }
@@ -52,6 +67,11 @@ void printList(List* list)
     }
 }
 
+/*
+Given a List pointer and a pointer to the pointer of a second list
+It will store in the outListPtr the result of merge both descending ordered by time list
+into one unique descending ordered by time list
+*/
 int mergeListByTimeOrder(List* oneList, List** outListPtr)
 {
     
@@ -66,7 +86,7 @@ int mergeListByTimeOrder(List* oneList, List** outListPtr)
         {
             if (prev == NULL)
             {
-                outList = listPush( outList, i->content, i->time );
+                outList = listPush( outList, i->content, i->time, i->owner );
                 j = outList;
             }
             else
@@ -74,6 +94,7 @@ int mergeListByTimeOrder(List* oneList, List** outListPtr)
                 List* new = (List*) malloc(sizeof(List));
                 new->content = i->content;
                 new->time = i->time;
+                new->owner = i->owner;
                 prev->next = new;
                 new->next = j;
                 j = new;
@@ -93,6 +114,7 @@ int mergeListByTimeOrder(List* oneList, List** outListPtr)
         List* new = (List*) malloc(sizeof(List));
         new->content = i->content;
         new->time = i->time;
+        new->owner = i->owner;
         if (prev != NULL)
         {
             new->next = prev->next;

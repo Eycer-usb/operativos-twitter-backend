@@ -54,7 +54,7 @@ int follow( User* follower, User* followed )
 {
     ListContent* content = (ListContent*) malloc(sizeof(ListContent));
     content->user = followed;
-    follower->follows = listPush( follower->follows, content, time(NULL) );
+    follower->follows = listPush( follower->follows, content, time(NULL), NULL );
     return 1;
 }
 
@@ -65,13 +65,17 @@ Add a new tweet to the user tweet list
 int newTweet( User* user, char* text  )
 {
     ListContent* content = (ListContent*) malloc(sizeof(ListContent));
+    char* owner;
     content->text = (char*) malloc(sizeof(char)*255);
     strcpy(content->text, text);
-    user->tweets = listPush( user->tweets, content, time(NULL) );
+    owner = user->username;
+    user->tweets = listPush( user->tweets, content, time(NULL), owner);
     return 1;
 }
 
-
+/*
+Return the Timeline of tweets to the given user
+*/
 List* getUserTimeLine(User* user)
 {
     // Memory alocation to store the merged list
