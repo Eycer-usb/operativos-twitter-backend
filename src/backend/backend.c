@@ -1,3 +1,7 @@
+/*
+Test function set for the backend
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -7,7 +11,7 @@
 #include "hashtable.h"
 
 /*
-Set of proof to User Struct
+Set of test to User Struct
 */
 int testUser()
 {
@@ -51,7 +55,7 @@ int testTimeLine()
 }
 
 /*
-Set of proof to List Struct
+Set of test to List Struct
 */
 int testList()
 {
@@ -66,7 +70,7 @@ int testList()
 }
 
 /*
-Set of proof to hash Table
+Set of test to hash Table
 */
 int testHashTable()
 {
@@ -83,6 +87,9 @@ int testHashTable()
     return 1;
 }
 
+/*
+Test for standar workflow
+*/
 int testAll()
 {
     // Create Hash table to store users
@@ -131,15 +138,12 @@ int testAll()
     }
     
 }
+
 /*
-Execute Proof Suite to Backend
+Execute tests Suite to Backend
 */
 int main(int argc, char const *argv[])
 {
-    //testUser();
-    //testList();
-    //testTimeLine();
-    //testHashTable();
     testAll();
 
     return 0;
