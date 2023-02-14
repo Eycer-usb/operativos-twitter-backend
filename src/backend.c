@@ -83,7 +83,54 @@ int testHashTable()
     return 1;
 }
 
+int testAll()
+{
+    // Create Hash table to store users
+    HashTable table;
+    initHashTable(&table);
 
+    // To register Users
+    User eycer;
+    initUser(&eycer, "eycer", "Eros#123");
+    addToHashTable(&table, &eycer);
+
+    User blanyer;
+    initUser(&blanyer, "blanyer", "blanyer#123");
+    addToHashTable(&table, &blanyer);
+
+    User cesar;
+    initUser(&cesar, "cesar", "cesar#123");
+    addToHashTable(&table, &cesar);
+    
+    // To tweet
+    newTweet( &eycer, "Hi, This is a eycer's tweet" );
+    newTweet( &blanyer, "Hi, This is a blanyer's tweet" );
+    newTweet( &blanyer, "Hi, This is a cesar's tweet" );
+
+    // To Follow
+    follow(&eycer, &blanyer);
+    follow(&eycer, &cesar);
+
+    // To Login
+    User* search = getUserFromHashTable( &table, "eycer");
+    if (verifyPassword(search, "Eros#123"))
+    {
+        // Timeline list
+        List* timeline = getUserTimeLine( search );
+        printList(timeline);
+
+    }
+    
+    // Reject bad password
+    if (verifyPassword(&blanyer, "Eros#123"))
+    {
+        printf("Rejecting Not Working\n");
+    }
+    else{
+        printf("Wrong Password!\n");
+    }
+    
+}
 /*
 Execute Proof Suite to Backend
 */
@@ -92,7 +139,8 @@ int main(int argc, char const *argv[])
     //testUser();
     //testList();
     //testTimeLine();
-    testHashTable();
+    //testHashTable();
+    testAll();
 
     return 0;
 }
