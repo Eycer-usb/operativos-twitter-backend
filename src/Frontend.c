@@ -74,7 +74,7 @@ int loggerOptions()
     } while (1);
 }
 
-int login() 
+int logIn() 
 {   
     system("cls");
     char* username; 
@@ -88,12 +88,37 @@ int login()
     return 1;
 }
 
+int signIn() {
+    char* username; 
+    char* password;
+    char* passwordVerification;
+    int i = 0;
+
+    system("cls");
+    printf("\n\n Sing in");
+    printf("\n\n Enter username: ");
+    scanf("%s", &username);
+    printf("\n Enter password: ");
+    scanf("%s", &password);
+    do {
+        if (i == 0) {
+            printf("\n Repeat password: ");
+            scanf("%s", &passwordVerification);
+        } else {
+            printf("\n passwords do not match");
+            printf("\n Repeat password: ");
+            scanf("%s", &passwordVerification);   
+        }
+        i = 0;
+    } while (password == passwordVerification);
+}
+
 int logger() {
 
     int option = loggerOptions();
     if (option == 1){
-        login();
+        logIn();
     } else if (option == 2) {
-        printf("\n\n Sing in");
+        signIn();
     }
 }

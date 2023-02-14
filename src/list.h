@@ -16,10 +16,15 @@ union listContent
 struct List
 {
     List* next;
+    char* owner;
     ListContent* content;
     time_t time;
 };
 
-List* listPush( List* old, ListContent* content, time_t time);
+int initList( List* list );
+List* listPush( List* old, ListContent* content, time_t time, char* owner);
+int getSavedDateTime( List* list, char* buffer );
+int mergeListByTimeOrder(List* oneList, List** outList);
+void printList(List* list);
 
 #endif
