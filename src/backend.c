@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "user.h"
 #include "list.h"
+#include "hashtable.h"
 
 /*
 Set of proof to User Struct
@@ -65,13 +66,33 @@ int testList()
 }
 
 /*
+Set of proof to hash Table
+*/
+int testHashTable()
+{
+    HashTable table;
+    initHashTable(&table);
+    User eycer;
+    initUser(&eycer, "eycer", "Eros#123");
+    newTweet( &eycer, "New Tweet from HashTable!"  );
+    addToHashTable(&table, &eycer);
+    //printf("%d\n", addToHashTable(&table, &eycer));
+    User* search = getUserFromHashTable( &table, "eycer");
+    printList(search->tweets);
+    printf("Password Hashed in User: %ld\n", search->password);
+    return 1;
+}
+
+
+/*
 Execute Proof Suite to Backend
 */
 int main(int argc, char const *argv[])
 {
     //testUser();
     //testList();
-    testTimeLine();
+    //testTimeLine();
+    testHashTable();
 
     return 0;
 }
