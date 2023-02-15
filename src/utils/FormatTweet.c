@@ -12,7 +12,7 @@
  * @param username A pointer to the username of the tweet.
  * @param buffer_time A pointer to the time buffer of the tweet.
  */
-void format_tweet(char *tweet, char *username, char *buffer_time)
+void formatTweet(char *tweet, char *username, char *buffer_time)
 {
     int j;
     for (j = 0; j < 70; j++)
@@ -53,10 +53,10 @@ void format_tweet(char *tweet, char *username, char *buffer_time)
     }
     else
     {
-        printf("%s", tweet);
+        printf("%s\n", tweet);
     }
     printf("\033[0;34m");
-    printf("%s\n", buffer_time);
+    printf("%s\n\n", buffer_time);
     printf("\033[0m");
 
     for (j = 0; j < 70; j++)

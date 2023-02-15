@@ -1,4 +1,5 @@
 #include "list.h"
+#include "./../utils/formatTweet.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -7,7 +8,7 @@
 /*
 Initializate a List Node
 */
-int initList(List* list)
+int initList(List *list)
 {
     list->owner = NULL;
     list->content = NULL;
@@ -18,9 +19,9 @@ int initList(List* list)
 /*
 Add a node List at the start of the old List
 */
-List* listPush( List* old, ListContent* content, time_t time, char* owner)
+List *listPush(List *old, ListContent *content, time_t time, char *owner)
 {
-    List* new = (List*) malloc(sizeof(List));
+    List *new = (List *)malloc(sizeof(List));
     new->next = old;
     new->content = content;
     new->time = time;
@@ -31,10 +32,10 @@ List* listPush( List* old, ListContent* content, time_t time, char* owner)
 /*
 Given a List store Datetime formated in buffer
 */
-int getSavedDateTime( List* list, char* buffer )
+int getSavedDateTime(List *list, char *buffer)
 {
     time_t timer = (list->time);
-    struct tm* tm_info;
+    struct tm *tm_info;
     tm_info = localtime(&timer);
 
     strftime(buffer, 26, "%d-%m-%Y %H:%M", tm_info);
@@ -45,13 +46,13 @@ int getSavedDateTime( List* list, char* buffer )
 Given a list, printlist will print element by element including
 the ENDLIST node
 */
-void printList(List* list)
+void printList(List *list)
 {
-    List* i = list;
+    List *i = list;
     while (i)
     {
-        
-        if(i && i->content == NULL && i->next == NULL && i->time == -1)
+
+        if (i && i->content == NULL && i->next == NULL && i->time == -1)
         {
             printf("ENDLIST\n");
         }
@@ -59,9 +60,7 @@ void printList(List* list)
         {
             char buffer_time[17];
             getSavedDateTime(i, buffer_time);
-            printf("%s\n", i->owner);
-            printf("%s\n", i->content->text);
-            printf("%s\n", buffer_time);    
+            formatTweet(i->content->text, i->owner, buffer_time);
         }
         i = i->next;
     }
@@ -72,26 +71,26 @@ Given a List pointer and a pointer to the pointer of a second list
 It will store in the outListPtr the result of merge both descending ordered by time list
 into one unique descending ordered by time list
 */
-int mergeListByTimeOrder(List* oneList, List** outListPtr)
+int mergeListByTimeOrder(List *oneList, List **outListPtr)
 {
-    
-    List* i = oneList;
-    List* outList = *outListPtr;
-    List* j = outList;
-    List* prev = NULL;
 
-    while ( i->next && j->next )
+    List *i = oneList;
+    List *outList = *outListPtr;
+    List *j = outList;
+    List *prev = NULL;
+
+    while (i->next && j->next)
     {
         if (i->time >= j->time)
         {
             if (prev == NULL)
             {
-                outList = listPush( outList, i->content, i->time, i->owner );
+                outList = listPush(outList, i->content, i->time, i->owner);
                 j = outList;
             }
             else
             {
-                List* new = (List*) malloc(sizeof(List));
+                List *new = (List *)malloc(sizeof(List));
                 new->content = i->content;
                 new->time = i->time;
                 new->owner = i->owner;
@@ -99,19 +98,19 @@ int mergeListByTimeOrder(List* oneList, List** outListPtr)
                 new->next = j;
                 j = new;
             }
-            
+
             i = i->next;
         }
-        else if( i->time < j->time)
+        else if (i->time < j->time)
         {
             prev = j;
-            j = j->next;            
-        }        
+            j = j->next;
+        }
     }
 
     while (i->next)
     {
-        List* new = (List*) malloc(sizeof(List));
+        List *new = (List *)malloc(sizeof(List));
         new->content = i->content;
         new->time = i->time;
         new->owner = i->owner;
@@ -129,9 +128,7 @@ int mergeListByTimeOrder(List* oneList, List** outListPtr)
         }
         i = i->next;
     }
-    
-    
-    *outListPtr = outList;
-    return 1;    
-}
 
+    *outListPtr = outList;
+    return 1;
+}
