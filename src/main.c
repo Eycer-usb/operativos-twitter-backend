@@ -18,11 +18,10 @@ Main Function for twitter implementation
 // Start Point
 int main(int argc, char const *argv[])
 {
-    User eycer;
-    initUser(&eycer, "eycer", "Eros#123");
+    // User eycer;
+    // initUser(&eycer, "eycer", "Eros#123");
     //newTweet(&eycer, "First Tweet From Main");
-    //printList(eycer.tweets);
-    //dashBoard(eycer);
-    logger();
+    // printList(eycer.tweets);
+    interface();
     return 0;
 }

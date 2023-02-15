@@ -3,11 +3,13 @@
 
 #include "./../backend/user.h"
 
-int logger();
+User logger();
 int logIn();
-int signIn();
+User signIn();
 void printImage(User user);
 void dashBoard(User user);
 void printTwitts(User user);
+int prompt();
+int interface();
 
 #endif

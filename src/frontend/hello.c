@@ -21,12 +21,12 @@ int loggerOptions()
     do
     {
         clear();
-        printf("\n 1. Login");
-        printf("\n 2. Sign in");
+        printf("\n1. Login");
+        printf("\n2. Sign in");
         if (i = 0) {
-            printf("\n\n Select an option to continue: ");
+            printf("\n\nSelect an option to continue: ");
         } else {
-            printf("\n\n Select one of the options shown: ");
+            printf("\n\nSelect one of the options shown: ");
         }
         scanf("%i", &option);
         switch (option)
@@ -49,60 +49,133 @@ int logIn()
     clear();
     char username[20]; 
     char password[20];
-    printf("\n LOGIN");
-    printf("\n\n Enter username: ");
+    printf("\nLOGIN");
+    printf("\n\nEnter username: ");
     scanf("%s", username);
-    printf("\n Enter password: ");
+    printf("\nEnter password: ");
     scanf("%s", password);
 
-    /*
-        DETERMINAR EXISTENCIA DEL USUARIO
-    */
 
     return 1;
 }
 
-int signIn() {
+User signIn() {
     char username[20]; 
     char password[20]; 
     char passwordVerification[20];
     int i = 0;
 
     clear();
-    printf("\n\n Sing in");
-    printf("\n\n Enter username: ");
+    printf("\033[0;31m");
+    printf("\n\nSIGN IN");
+    printf("\n\nEnter username: ");
+
+    printf("\033[0;37m");
     scanf("%s", username);
-    printf("\n Enter password: ");
+
+    printf("\033[0;31m");
+    printf("\nEnter password: ");
+
+    printf("\033[0;37m");
     scanf("%s", password);
+
     do {
         if (i == 0) {
-            printf("\n Repeat password: ");
+            printf("\033[0;31m");
+            printf("\nRepeat password: ");
+
+            printf("\033[0;37m");
             scanf("%s", passwordVerification);
         } else {
-            printf("\n passwords do not match");
-            printf("\n Repeat password: ");
+            printf("\033[0;31m");
+            printf("\nPasswords do not match");
+            printf("\nRepeat password: ");
+            
+            printf("\033[0;37m");
             scanf("%s", passwordVerification);   
         }
-        i = 0;
+        i = 1;
     } while (strcmp(password, passwordVerification) != 0);
+
+    /*
+        DETERMINAR EXISTENCIA DEL USUARIO
+    */
 
     User user;
     initUser(&user, username, password);
+
+    return user;
 }
 
-int logger() {
+User logger() {
+    User user;
     int option = loggerOptions();
     if (option == 1){
         logIn();
     } else if (option == 2) {
-        signIn();
+        user = signIn();
     }
+    return user;
 }
 
 void dashBoard(User user) {
-    printf("\n @%s", "usuario");
-    printf("\n My number of Tweets: %i", 1548);
-    printf("\n My number of Following: %i", 123);
-    printf("\n My numer of Followers: %i", 9321);
+    printf("\n@%s", user.username);
+    printf("\nMy number of Tweets: %i", 1548);
+    printf("\nMy number of Following: %i", 123);
+    printf("\nMy numer of Followers: %i", 9321);
     printf("\n");
+    printf("\n LIST TWITTS");
+    /*
+    IMPRMIR LISTA DE TWITTS DE SEGUIDORES
+    */
+}
+
+int prompt(User user) {
+    int i = 1;
+    do {
+        char prompt[20];
+        printf("\033[0;31m");
+        printf("\nPrompt: ");
+
+        printf("\033[0;37m");
+        scanf("%s", prompt);
+        if (prompt[0] == '+') {
+            /*
+                USAR CODIGO PARA ELIMINAR SIMBOLO + DEL PROMPT Y RESET
+            */
+           printf("\nTWITT ENVIADO");
+           i = 0;
+            
+        } else if (prompt[0] == '@') {
+            /*
+                BUSCAR LOS TWITTS DEL OTRO USUARIO
+            */
+           printf("USUARIO BUSCADO");
+           i = 0;
+        } else if (!strcmp(prompt, "logout")) {
+            /*
+                SALIR
+            */
+           printf("\nLOGOUT");
+           i = 0;
+        } else {
+            printf("\033[0;31m");
+            printf("\nINVALID ENTRY");
+        }
+    } while (i);
+
+    return 1;
+}
+
+int followeProfile() {
+
+}
+
+int interface() {
+    User user = logger();
+    dashBoard(user);
+    prompt(user);
+    /*
+    SEPARAR OPCIONES ENTRE USER y OWNER
+    */
 }
