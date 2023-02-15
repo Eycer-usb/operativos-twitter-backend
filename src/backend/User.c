@@ -21,6 +21,7 @@ int initUser( User* user, char* username, char* password )
     // Tails Definition
     user->follows = (List*) malloc(sizeof(List));
     user->tweets = (List*) malloc(sizeof(List));
+    user->password = -1;
     initList(user->follows);
     initList(user->tweets);
     strcpy( user->username, username );
@@ -34,7 +35,7 @@ set as password.
 */
 void setPassword( User* user, char* password )
 {
-    (*user).password = hashFun( password );
+    user->password = hashFun( password );
 }
 
 /*
