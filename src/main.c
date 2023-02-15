@@ -20,8 +20,9 @@ int main(int argc, char const *argv[])
 {
     User eycer;
     initUser(&eycer, "eycer", "Eros#123");
-    newTweet(&eycer, "First Tweet From Main");
-    printhelloworld();
-    printList(eycer.tweets);
+    //newTweet(&eycer, "First Tweet From Main");
+    //printList(eycer.tweets);
+    //dashBoard(eycer);
+    logger();
     return 0;
 }

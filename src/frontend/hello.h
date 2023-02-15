@@ -1,6 +1,13 @@
 #if !defined(HELLO)
 #define HELLO
 
-void printhelloworld();
+#include "./../backend/user.h"
 
-#endif // HELLO
+int logger();
+int logIn();
+int signIn();
+void printImage(User user);
+void dashBoard(User user);
+void printTwitts(User user);
+
+#endif
