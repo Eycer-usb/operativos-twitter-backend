@@ -63,7 +63,7 @@ int follow( User* follower, User* followed )
 Add a new tweet to the user tweet list
 */
 //WIP
-int newTweet( User* user, char* text  )
+int newTweet(User* user, char* text  )
 {
     ListContent* content = (ListContent*) malloc(sizeof(ListContent));
     char* owner;

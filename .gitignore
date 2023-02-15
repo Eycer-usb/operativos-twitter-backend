@@ -1,2 +1,4 @@
 *.o
 /tmp
+/.vscode
+*.exe
