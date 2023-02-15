@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "formatTweet.h"
 
 #define MAX_LINE_LENGTH 70
