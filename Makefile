@@ -25,9 +25,13 @@ BACKENDFILES =	$(TEMPDIR)/User.o \
 # Frontend temporary files
 FRONTENDFILES =	$(TEMPDIR)/Hello.o
 
+# Utils temporary files
+UTILSFILES =	$(TEMPDIR)/FormatTweet.o
+
 # Objective temporary files
 FILES =	$(BACKENDFILES)\
 		$(FRONTENDFILES)\
+		$(UTILSFILES)\
 		$(TEMPDIR)/Main.o
 
 
@@ -76,6 +80,11 @@ $(TEMPDIR)/Hello.o:	$(TEMPDIR) \
 					$(SRCDIR)/frontend/hello.c
 	$(COMPILE) $(SRCDIR)/frontend/hello.c -o $(TEMPDIR)/Hello.o
 
+# Utils files
+$(TEMPDIR)/FormatTweet.o:	$(TEMPDIR) \
+					$(SRCDIR)/utils/formatTweet.h \
+					$(SRCDIR)/utils/FormatTweet.c
+	$(COMPILE) $(SRCDIR)/utils/FormatTweet.c -o $(TEMPDIR)/FormatTweet.o
 
 # The main Function
 $(TEMPDIR)/Main.o: 	$(TEMPDIR)\
