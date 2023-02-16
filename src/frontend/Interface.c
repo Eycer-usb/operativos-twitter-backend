@@ -6,46 +6,45 @@
 
 int prompt(User *user)
 {
-    int i = 1;
-    do
+    int should_continue = 1;
+
+    while (should_continue)
     {
         char prompt[50];
-        printf("\033[0;31m");
-        printf("\nPrompt: ");
 
+        printf("\033[0;31mPrompt: ");
         printf("\033[0;37m");
-        fgets(prompt, 50, stdin);
-        if (prompt[0] == '+')
+        scanf(" %[^\n]", prompt);
+
+        switch (prompt[0])
         {
-            /*
-                USAR CODIGO PARA ELIMINAR SIMBOLO + DEL PROMPT Y RESET
-            */
+        case '+':
+            /* Elimina el símbolo "+" del prompt */
+            memmove(prompt, prompt + 1, strlen(prompt));
             newTweet(user, prompt);
-            printf("\nTWITT ENVIADO");
-            i = 0;
+            printf("Tweet enviado\n");
+            should_continue = 0;
+            break;
+
+        case '@':
+            /* Busca los tweets del otro usuario */
+            printf("Usuario buscado\n");
+            should_continue = 0;
+            break;
+
+        default:
+            if (!strcmp(prompt, "logout"))
+            {
+                printf("Logout\n");
+                should_continue = 0;
+            }
+            else
+            {
+                printf("\033[0;31mEntrada inválida\n");
+            }
+            break;
         }
-        else if (prompt[0] == '@')
-        {
-            /*
-                BUSCAR LOS TWITTS DEL OTRO USUARIO
-            */
-            printf("USUARIO BUSCADO");
-            i = 0;
-        }
-        else if (!strcmp(prompt, "logout"))
-        {
-            /*
-                SALIR
-            */
-            printf("\nLOGOUT");
-            i = 0;
-        }
-        else
-        {
-            printf("\033[0;31m");
-            printf("\nINVALID ENTRY");
-        }
-    } while (i);
+    }
 
     return 1;
 }
@@ -71,8 +70,6 @@ void dashboard(User user)
 
 int interface()
 {
-    User user1;
-    initUser(&user1, "eycer", "Eros#123");
 
     User user = logger();
     do
@@ -82,8 +79,4 @@ int interface()
         printList(user.tweets);
         prompt(&user);
     } while (1);
-
-    /*
-    SEPARAR OPCIONES ENTRE USER y OWNER
-    */
 }
