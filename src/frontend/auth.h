@@ -7,6 +7,6 @@
 User logger();
 User logIn();
 User signIn();
-void logOut();
+void logOut(User *user, HashTable *table);
 
 #endif

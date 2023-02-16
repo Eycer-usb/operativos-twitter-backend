@@ -37,7 +37,7 @@ int prompt(User *user, HashTable *table)
             if (!strcmp(prompt, "logout"))
             {
                 printf("Logout\n");
-                logOut(&table);
+                logOut(user, table);
                 should_continue = 0;
             }
             else if (strcmp(prompt, "logout") && strlen(prompt) > 1)

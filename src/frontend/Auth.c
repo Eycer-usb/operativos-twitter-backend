@@ -131,7 +131,7 @@ void logOut(User *user, HashTable *table)
     char password[20];
     int i = 0;
 
-    clear();
+    // clear();
     printf("\033[0;31m");
     printf("\n\nARE YOU LEAVING?");
     printf("\n\nEnter username: ");
@@ -144,9 +144,12 @@ void logOut(User *user, HashTable *table)
 
     printf("\033[0;37m");
     scanf("%s", password);
+
+    printf("\n%i\n",strcmp(username, user->username));
+
     while (!isLoggedOut)
     {
-        if (username == user->username && verifyPassword(user, password))
+        if (strcmp(username, user->username) == 0 && verifyPassword(user, password))
         {
             addToHashTable(table, user);
             loggerOptions();
