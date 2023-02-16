@@ -1,20 +1,21 @@
 #include <stdio.h>
 #include <string.h>
 #include "./../backend/user.h"
+#include "./../backend/hashtable.h"
 #include "auth.h"
 #define clear() printf("\033[H\033[J");
 
-int prompt(User *user)
+int prompt(User *user, HashTable *table)
 {
     int should_continue = 1;
 
     while (should_continue)
     {
-        char prompt[50];
+        char prompt[281];
 
         printf("\033[0;31mPrompt: ");
         printf("\033[0;37m");
-        scanf(" %[^\n]", prompt);
+        scanf(" %280[^\n]", prompt);
 
         switch (prompt[0])
         {
@@ -36,9 +37,10 @@ int prompt(User *user)
             if (!strcmp(prompt, "logout"))
             {
                 printf("Logout\n");
+                logOut(&table);
                 should_continue = 0;
             }
-            else
+            else if (strcmp(prompt, "logout") && strlen(prompt) > 1)
             {
                 printf("\033[0;31mEntrada inválida\n");
             }
@@ -73,12 +75,14 @@ void dashboard(User user)
  */
 int interface()
 {
+    HashTable table;
+    initHashTable(&table);
     User user = logger();
     do
     {
         clear();
         dashboard(user);
         printList(user.tweets);
-        prompt(&user);
+        prompt(&user, &table);
     } while (1);
 }

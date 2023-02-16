@@ -66,7 +66,7 @@ int newTweet(User *user, char *text)
 {
     ListContent *content = (ListContent *)malloc(sizeof(ListContent));
     char *owner;
-    content->text = (char *)malloc(sizeof(char) * 255);
+    content->text = (char *)malloc(sizeof(char) * 280);
     strcpy(content->text, text);
     owner = user->username;
     user->tweets = listPush(user->tweets, content, time(NULL), owner);

@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "auth.h"
+#include "./../backend/hashtable.h"
 #define clear() printf("\033[H\033[J"); // clear() ya es una función del sistema.
 
 int loggerOptions()
@@ -118,6 +119,47 @@ User signIn()
     initUser(&user, username, password);
 
     return user;
+}
+
+/**
+ * Register the current user logger in the bucket, then logout.
+ */
+void logOut(User *user, HashTable *table)
+{
+    int isLoggedOut = 0;
+    char username[20];
+    char password[20];
+    int i = 0;
+
+    clear();
+    printf("\033[0;31m");
+    printf("\n\nARE YOU LEAVING?");
+    printf("\n\nEnter username: ");
+
+    printf("\033[0;37m");
+    scanf("%s", username);
+
+    printf("\033[0;31m");
+    printf("\nEnter password: ");
+
+    printf("\033[0;37m");
+    scanf("%s", password);
+    while (!isLoggedOut)
+    {
+        if (username == user->username && verifyPassword(user, password))
+        {
+            addToHashTable(table, user);
+            loggerOptions();
+            isLoggedOut = 1;
+        }
+        else
+        {
+            printf("\033[0;31m");
+            printf("WRONG USERNAME OR PASSWORD, TRY AGAIN!\n");
+            printf("\033[0m");
+            logOut(user, table);
+        }
+    }
 }
 
 /**
