@@ -2,7 +2,7 @@
 #include <string.h>
 #include "./../backend/user.h"
 #include "auth.h"
-#define clearColor() printf("\033[H\033[J");
+#define clear() printf("\033[H\033[J");
 
 int prompt(User *user)
 {
@@ -70,11 +70,11 @@ void dashboard(User user)
 
 int interface()
 {
-
+    clear();
     User user = logger();
     do
     {
-        clearColor();
+        clear();
         dashboard(user);
         printList(user.tweets);
         prompt(&user);
