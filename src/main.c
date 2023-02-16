@@ -13,7 +13,8 @@ Main Function for twitter implementation
 #include "backend/hashtable.h"
 
 // Frontend Includes
-#include "frontend/hello.h"
+#include "frontend/interface.h"
+#include "frontend/auth.h"
 
 // Start Point
 int main(int argc, char const *argv[])

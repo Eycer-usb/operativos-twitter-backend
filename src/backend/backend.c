@@ -112,7 +112,7 @@ int testAll()
     // To tweet
     newTweet( &eycer, "Hi, This is a eycer's tweet" );
     newTweet( &blanyer, "Hi, This is a blanyer's tweet" );
-    newTweet( &blanyer, "Hi, This is a cesar's tweet" );
+    newTweet( &cesar, "Hi, This is a cesar's tweet" );
 
     // To Follow
     follow(&eycer, &blanyer);

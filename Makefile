@@ -23,7 +23,8 @@ BACKENDFILES =	$(TEMPDIR)/User.o \
 				$(TEMPDIR)/HashTable.o 
 
 # Frontend temporary files
-FRONTENDFILES =	$(TEMPDIR)/Hello.o
+FRONTENDFILES =	$(TEMPDIR)/Auth.o \
+				$(TEMPDIR)/Interface.o
 
 # Utils temporary files
 UTILSFILES =	$(TEMPDIR)/FormatTweet.o
@@ -75,10 +76,15 @@ $(TEMPDIR)/HashTable.o:	$(TEMPDIR) \
 
 
 # Frontend files
-$(TEMPDIR)/Hello.o:	$(TEMPDIR) \
-					$(SRCDIR)/frontend/hello.h \
-					$(SRCDIR)/frontend/hello.c
-	$(COMPILE) $(SRCDIR)/frontend/hello.c -o $(TEMPDIR)/Hello.o
+$(TEMPDIR)/Auth.o:	$(TEMPDIR) \
+					$(SRCDIR)/frontend/auth.h \
+					$(SRCDIR)/frontend/Auth.c
+	$(COMPILE) $(SRCDIR)/frontend/Auth.c -o $(TEMPDIR)/Auth.o
+
+$(TEMPDIR)/Interface.o:	$(TEMPDIR) \
+					$(SRCDIR)/frontend/interface.h \
+					$(SRCDIR)/frontend/Interface.c
+	$(COMPILE) $(SRCDIR)/frontend/Interface.c -o $(TEMPDIR)/Interface.o
 
 # Utils files
 $(TEMPDIR)/FormatTweet.o:	$(TEMPDIR) \
