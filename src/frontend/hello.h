@@ -4,7 +4,7 @@
 #include "./../backend/user.h"
 
 User logger();
-int logIn();
+User logIn();
 User signIn();
 void printImage(User user);
 void dashBoard(User user);

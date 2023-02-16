@@ -44,8 +44,7 @@ int loggerOptions()
     } while (1);
 }
 
-int logIn() 
-{   
+User logIn() {   
     clear();
     char username[20]; 
     char password[20];
@@ -55,8 +54,14 @@ int logIn()
     printf("\nEnter password: ");
     scanf("%s", password);
 
+    /*
+    DETERMINAR EXISTENCIA DE USUARIO
+    */
 
-    return 1;
+    User user;
+    initUser(&user, username, password);
+
+    return user;
 }
 
 User signIn() {
@@ -111,7 +116,7 @@ User logger() {
     User user;
     int option = loggerOptions();
     if (option == 1){
-        logIn();
+        user = logIn();
     } else if (option == 2) {
         user = signIn();
     }
@@ -124,25 +129,26 @@ void dashBoard(User user) {
     printf("\nMy number of Following: %i", 123);
     printf("\nMy numer of Followers: %i", 9321);
     printf("\n");
-    printf("\n LIST TWITTS");
+    printf("\nMy Twitts\n");
     /*
     IMPRMIR LISTA DE TWITTS DE SEGUIDORES
     */
 }
 
-int prompt(User user) {
+int prompt(User* user) {
     int i = 1;
     do {
-        char prompt[20];
+        char prompt[50];
         printf("\033[0;31m");
         printf("\nPrompt: ");
 
         printf("\033[0;37m");
-        scanf("%s", prompt);
+        fgets(prompt, 50, stdin);
         if (prompt[0] == '+') {
             /*
                 USAR CODIGO PARA ELIMINAR SIMBOLO + DEL PROMPT Y RESET
             */
+           newTweet(user, prompt);
            printf("\nTWITT ENVIADO");
            i = 0;
             
@@ -167,14 +173,26 @@ int prompt(User user) {
     return 1;
 }
 
-int followeProfile() {
+// int followeProfile() {
+//     print
+// }
+int searchUser(char* username) {
 
+    //strcmp()
 }
 
 int interface() {
+    User user1;
+    initUser(&user1, "eycer", "Eros#123");
+
     User user = logger();
-    dashBoard(user);
-    prompt(user);
+    do {
+        clear();
+        dashBoard(user);
+        printList(user.tweets);
+        prompt(&user);
+    } while(1);
+    
     /*
     SEPARAR OPCIONES ENTRE USER y OWNER
     */
