@@ -59,7 +59,7 @@ int searchUser(char *username)
 void dashboard(User user)
 {
     printf("\n@%s", user.username);
-    printf("\nMy number of Tweets: %i", 1548);
+    printf("\nMy number of Tweets: %i", 1550);
     printf("\nMy number of Following: %i", 123);
     printf("\nMy number of Followers: %i", 9321);
     printf("\n");
