@@ -7,15 +7,15 @@
 
 int prompt(User *user, HashTable *table)
 {
-    int should_continue = 1;
+    int should_continue = 0;
 
-    while (should_continue)
+    while (!should_continue)
     {
         char prompt[281];
 
         printf("\033[0;31mPrompt: ");
         printf("\033[0;37m");
-        scanf(" %280[^\n]", prompt);
+        scanf(" %[^\n]", prompt);
 
         switch (prompt[0])
         {
@@ -24,21 +24,21 @@ int prompt(User *user, HashTable *table)
             memmove(prompt, prompt + 1, strlen(prompt));
             newTweet(user, prompt);
             printf("Tweet enviado\n");
-            should_continue = 0;
+            should_continue = 1;
             break;
 
         case '@':
             /* Busca los tweets del otro usuario */
             printf("Usuario buscado\n");
-            should_continue = 0;
+            should_continue = 1;
             break;
 
         default:
             if (!strcmp(prompt, "logout"))
             {
                 printf("Logout\n");
-                logOut(user, table);
-                should_continue = 0;
+                //logOut(user, table);
+                should_continue = -1;
             }
             else if (strcmp(prompt, "logout") && strlen(prompt) > 1)
             {
@@ -47,7 +47,7 @@ int prompt(User *user, HashTable *table)
             break;
         }
     }
-    return 1;
+    return should_continue;
 }
 
 int searchUser(char *username)
@@ -74,15 +74,22 @@ void dashboard(User user)
  * and twitter options.
  */
 int interface()
-{
+{   
+    
     HashTable table;
     initHashTable(&table);
-    User user = logger();
+    User blanyer;
+    initUser(&blanyer, "blanyer", "blanyer#123");
+    addToHashTable(&table, &blanyer);
+    
     do
     {
-        clear();
-        dashboard(user);
-        printList(user.tweets);
-        prompt(&user, &table);
+        User user = logger(&table);
+        do {
+            printf("probando");
+            clear();
+            dashboard(user);
+            printList(user.tweets);
+        } while (prompt(&user, &table) != -1);
     } while (1);
 }

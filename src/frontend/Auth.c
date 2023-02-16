@@ -42,23 +42,23 @@ int loggerOptions()
     } while (1);
 }
 
-User logIn()
+User logIn(HashTable* table)
 {
-    clear();
     char username[20];
     char password[20];
-    printf("\nLOGIN");
-    printf("\n\nEnter username: ");
-    scanf("%s", username);
-    printf("\nEnter password: ");
-    scanf("%s", password);
-
-    /*
-    DETERMINAR EXISTENCIA DE USUARIO
-    */
-
     User user;
+
+    do {
+        clear();
+        printf("\nLOGIN");
+        printf("\n\nEnter username: ");
+        scanf("%s", username);
+        printf("\nEnter password: ");
+        scanf("%s", password);
+
+    } while (!getUserFromHashTable(table, username));
     initUser(&user, username, password);
+    addToHashTable(table, &user);
 
     return user;
 }
@@ -68,56 +68,56 @@ User logIn()
  * It returns a User struct containing the entered information
  * @return User: a struct containing the entered username and password
  */
-User signIn()
+User signIn(HashTable* table)
 {
     char username[20];
     char password[20];
     char passwordVerification[20];
-    int i = 0;
 
-    clear();
-    printf("\033[0;31m");
-    printf("\n\nSIGN IN");
-    printf("\n\nEnter username: ");
-
-    printf("\033[0;37m");
-    scanf("%s", username);
-
-    printf("\033[0;31m");
-    printf("\nEnter password: ");
-
-    printf("\033[0;37m");
-    scanf("%s", password);
 
     do
     {
-        if (i == 0)
+        int i = 0;
+        clear();
+        printf("\033[0;31m");
+        printf("\n\nSIGN IN");
+        printf("\n\nEnter username: ");
+
+        printf("\033[0;37m");
+        scanf("%s", username);
+
+        printf("\033[0;31m");
+        printf("\nEnter password: ");
+
+        printf("\033[0;37m");
+        scanf("%s", password);
+
+        do
         {
-            printf("\033[0;31m");
-            printf("\nRepeat password: ");
+            if (i == 0)
+            {
+                printf("\033[0;31m");
+                printf("\nRepeat password: ");
 
-            printf("\033[0;37m");
-            scanf("%s", passwordVerification);
-        }
-        else
-        {
-            printf("\033[0;31m");
-            printf("\nPasswords do not match");
-            printf("\nRepeat password: ");
+                printf("\033[0;37m");
+                scanf("%s", passwordVerification);
+            }
+            else
+            {
+                printf("\033[0;31m");
+                printf("\nPasswords do not match");
+                printf("\nRepeat password: ");
 
-            printf("\033[0;37m");
-            scanf("%s", passwordVerification);
-        }
-        i = 1;
-    } while (strcmp(password, passwordVerification) != 0);
-
-    /*
-        DETERMINAR EXISTENCIA DEL USUARIO
-    */
+                printf("\033[0;37m");
+                scanf("%s", passwordVerification);
+            }
+            i = 1;
+        } while (strcmp(password, passwordVerification) != 0);
+    } while (getUserFromHashTable(table, username));
 
     User user;
     initUser(&user, username, password);
-
+    addToHashTable(table, &user);
     return user;
 }
 
@@ -169,17 +169,17 @@ void logOut(User *user, HashTable *table)
  * Prompts the user to either log in, sign up or leave.
  * @return User: the user that logged in or signed up
  */
-User logger()
+User logger(HashTable* table)
 {
     User user;
     int option = loggerOptions();
     if (option == 1)
     {
-        user = logIn();
+        user = logIn(table);
     }
     else if (option == 2)
     {
-        user = signIn();
+        user = signIn(table);
     }
     else
     {
