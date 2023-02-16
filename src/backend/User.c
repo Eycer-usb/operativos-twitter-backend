@@ -12,19 +12,18 @@ The members are:
 #include "user.h"
 #include "hashtable.h"
 
-
 /*
 Initializate User Struct
 */
-int initUser( User* user, char* username, char* password )
+int initUser(User *user, char *username, char *password)
 {
     // Tails Definition
-    user->follows = (List*) malloc(sizeof(List));
-    user->tweets = (List*) malloc(sizeof(List));
+    user->follows = (List *)malloc(sizeof(List));
+    user->tweets = (List *)malloc(sizeof(List));
     user->password = -1;
     initList(user->follows);
     initList(user->tweets);
-    strcpy( user->username, username );
+    strcpy(user->username, username);
     setPassword(user, password);
     return 1;
 }
@@ -33,16 +32,16 @@ int initUser( User* user, char* username, char* password )
 Given a user and a password. The password is hashed and
 set as password.
 */
-void setPassword( User* user, char* password )
+void setPassword(User *user, char *password)
 {
-    user->password = hashFun( password );
+    user->password = hashFun(password);
 }
 
 /*
 Given a user and a password. Return 1 if the password
 corresponds to the stored hashed password, and 0 otherwise.
 */
-int verifyPassword( User* user, char password[20] )
+int verifyPassword(User *user, char password[20])
 {
     long int hashed = hashFun(password);
     return (*user).password == hashed;
@@ -51,41 +50,41 @@ int verifyPassword( User* user, char password[20] )
 /*
 Add the followed to the follow list of the follower
 */
-int follow( User* follower, User* followed )
+int follow(User *follower, User *followed)
 {
-    ListContent* content = (ListContent*) malloc(sizeof(ListContent));
+    ListContent *content = (ListContent *)malloc(sizeof(ListContent));
     content->user = followed;
-    follower->follows = listPush( follower->follows, content, time(NULL), NULL );
+    follower->follows = listPush(follower->follows, content, time(NULL), NULL);
     return 1;
 }
 
 /*
 Add a new tweet to the user tweet list
 */
-//WIP
-int newTweet(User* user, char* text  )
+// WIP
+int newTweet(User *user, char *text)
 {
-    ListContent* content = (ListContent*) malloc(sizeof(ListContent));
-    char* owner;
-    content->text = (char*) malloc(sizeof(char)*255);
+    ListContent *content = (ListContent *)malloc(sizeof(ListContent));
+    char *owner;
+    content->text = (char *)malloc(sizeof(char) * 255);
     strcpy(content->text, text);
     owner = user->username;
-    user->tweets = listPush( user->tweets, content, time(NULL), owner);
+    user->tweets = listPush(user->tweets, content, time(NULL), owner);
     return 1;
 }
 
 /*
 Return the Timeline of tweets to the given user
 */
-List* getUserTimeLine(User* user)
+List *getUserTimeLine(User *user)
 {
-    // Memory alocation to store the merged list
-    List* outList = (List*) malloc(sizeof(List));
+    /*  Memory alocation to store the merged list */
+    List *outList = (List *)malloc(sizeof(List));
     initList(outList);
-    List* follow_i = user->follows;
+    List *follow_i = user->follows;
     while (follow_i->next)
     {
-        if(mergeListByTimeOrder( follow_i->content->user->tweets, &outList ))
+        if (mergeListByTimeOrder(follow_i->content->user->tweets, &outList))
         {
             follow_i = follow_i->next;
         }
@@ -95,6 +94,4 @@ List* getUserTimeLine(User* user)
         }
     }
     return outList;
-    
 }
-
