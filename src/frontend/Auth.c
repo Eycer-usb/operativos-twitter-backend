@@ -6,7 +6,7 @@
 
 int loggerOptions()
 {
-    int option;
+    char option[6];
 
     do
     {
@@ -14,30 +14,30 @@ int loggerOptions()
         printf("\033[0;32m");
         printf("DON'T MISS WHAT'S HAPPENING! LOGIN, SIGNUP OR LEAVE\n");
         printf("\033[0m");
-        printf("\n1. Login");
-        printf("\n2. Sign in");
-        printf("\n3. Leave");
+        printf("\n1. login");
+        printf("\n2. signup");
+        printf("\n3. leave");
 
-        if (option == 0)
+        printf("\n\nPlease type an option to continue: ");
+        scanf("%s", option);
+
+        if (strcmp(option, "login") == 0)
         {
-            printf("\n\nSelect an option to continue: ");
+            return 1;
         }
-        else
+        else if (strcmp(option, "signup") == 0)
         {
-            printf("\n\nSelect one of the options shown: ");
+            return 2;
         }
-
-        scanf("%i", &option);
-
-        if (1 <= option <= 3)
+        else if (strcmp(option, "leave") == 0)
         {
-            return option;
+            return 3;
         }
         else
         {
             printf("\nInvalid option. Try again.\n");
-            option = 0; // Si la opción ingresada es inválida, se restablece la opción a 0 para mostrar el mensaje correcto
         }
+
     } while (1);
 }
 

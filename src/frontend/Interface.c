@@ -45,7 +45,6 @@ int prompt(User *user)
             break;
         }
     }
-
     return 1;
 }
 
@@ -74,13 +73,12 @@ void dashboard(User user)
  */
 int interface()
 {
-    clear();
     User user = logger();
     do
     {
         clear();
         dashboard(user);
-        prompt(&user);
         printList(user.tweets);
+        prompt(&user);
     } while (1);
 }
