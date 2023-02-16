@@ -4,7 +4,6 @@
 #include "auth.h"
 #define clearColor() printf("\033[H\033[J");
 
-
 int prompt(User *user)
 {
     int i = 1;
