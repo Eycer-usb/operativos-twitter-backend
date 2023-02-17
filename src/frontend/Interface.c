@@ -92,10 +92,10 @@ int interface()
             printf("probando");
             clear();
             dashboard(user);
-            printf("%s", user->username);
+            //printf("%s", user->username);
             newTweet(user, "primer twitt");
             
-            printList(user->tweets);
+            //printList(user->tweets);
         } while (prompt(user, &table) != -1);
     } while (1);
 }
