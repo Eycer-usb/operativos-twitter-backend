@@ -50,26 +50,29 @@ User *logIn(HashTable *table)
 
     clear();
     int i = 0;
+    do
+    {
+        if (i == 0)
+        {
+            printf("\033[0;32m");
+            printf("\nLOGIN");
+            printf("\033[0m");
+            printf("\n\nEnter username: ");
+            scanf("%s", username);
+        }
+        else
+        {
+            printf("\033[0;32m");
+            printf("\nLOGIN");
+            printf("\033[0m");
+            printf("\n\nUsername does not exist");
+            printf("\nEnter username: ");
+            scanf("%s", username);
+        }
+        i = 1;
+    } while (!getUserFromHashTable(table, username));
 
-    if (i == 0)
-    {
-        printf("\033[0;32m");
-        printf("\nLOGIN");
-        printf("\033[0m");
-        printf("\n\nEnter username: ");
-        scanf("%s", username);
-    }
-    else
-    {
-        printf("\033[0;32m");
-        printf("\nLOGIN");
-        printf("\033[0m");
-        printf("\n\nUsername does not exist");
-        printf("\nEnter username: ");
-        scanf("%s", username);
-    }
     i = 1;
-    while (!getUserFromHashTable(table, username))
         do
         {
             if (i == 1)
@@ -86,7 +89,6 @@ User *logIn(HashTable *table)
             i = 2;
         } while (!verifyPassword(getUserFromHashTable(table, username), password));
     clear();
-    free(password);
     return getUserFromHashTable(table, username);
 }
 
