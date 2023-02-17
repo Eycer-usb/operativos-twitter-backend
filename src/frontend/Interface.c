@@ -6,18 +6,17 @@
 #define clear() printf("\033[H\033[J");
 
 void dashboard(User *user)
-{   
+{
     printf("\n@%s", user->username);
-    printf("\nTweets: %i", 1550);
+    printf("\nTweets: %i", user->tweetCount);
     printf("\nFollowing: %i", 123);
     printf("\nFollowers: %i", 9321);
     printf("\n");
     printf("\nMy Tweets\n");
     printList(user->tweets);
-
 }
 
-int promptVisit(User *user, User *userV) 
+int promptVisit(User *user, User *userV)
 {
     int should_continue = 0;
 
@@ -29,9 +28,12 @@ int promptVisit(User *user, User *userV)
         printf("\033[0;37m");
         scanf(" %[^\n]", prompt);
 
-        if (prompt == "follow") {
+        if (prompt == "follow")
+        {
             break;
-        } else {
+        }
+        else
+        {
             if (!strcmp(prompt, "return"))
             {
                 should_continue = -1;
@@ -48,11 +50,11 @@ int promptVisit(User *user, User *userV)
 }
 
 void dashboardVisit(User *user, User *userV)
-{   
+{
     do
-    {   
+    {
         printf("\n%s's profile", userV->username);
-        printf("\nTweets: %i", 1550);
+        printf("\nTweets: %i", userV->tweetCount);
         printf("\nFollowing: %i", 123);
         printf("\nFollowers: %i", 9321);
         printf("\n");
