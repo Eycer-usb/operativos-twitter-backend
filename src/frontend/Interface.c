@@ -74,6 +74,7 @@ void dashboardVisit(User *user, User *userVisited)
         printf("\nTweets: %i", userVisited->tweetCount);
         printf("\nFollowing: %i", userVisited->followingCount);
         printf("\nFollowers: %i", userVisited->followersCount);
+        printf("\nDescription: %s", userVisited->description);
         printf("\n");
         printf("\033[0;36m");
         printf("\n%s's Tweets\n", userVisited->username);

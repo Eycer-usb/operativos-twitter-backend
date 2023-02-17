@@ -31,7 +31,7 @@ int loggerOptions()
             return 2;
         }
         else if (strcmp(option, "leave") == 0)
-        {   
+        {
             clear();
             return 3;
         }
@@ -73,21 +73,21 @@ User *logIn(HashTable *table)
     } while (!getUserFromHashTable(table, username));
 
     i = 1;
-        do
+    do
+    {
+        if (i == 1)
         {
-            if (i == 1)
-            {
-                printf("\nEnter password: ");
-                scanf("%s", password);
-            }
-            else
-            {
-                printf("\n\nWrong Password!");
-                printf("\nEnter password again: ");
-                scanf("%s", password);
-            }
-            i = 2;
-        } while (!verifyPassword(getUserFromHashTable(table, username), password));
+            printf("\nEnter password: ");
+            scanf("%s", password);
+        }
+        else
+        {
+            printf("\n\nWrong Password!");
+            printf("\nEnter password again: ");
+            scanf("%s", password);
+        }
+        i = 2;
+    } while (!verifyPassword(getUserFromHashTable(table, username), password));
     clear();
     return getUserFromHashTable(table, username);
 }
@@ -102,6 +102,7 @@ User *signIn(HashTable *table)
     char username[20];
     char password[20];
     char passwordVerification[20];
+    char description[161];
     int i = 0;
     clear();
 
@@ -154,7 +155,20 @@ User *signIn(HashTable *table)
         printf("Error: could not allocate memory for User\n");
         return NULL;
     }
-    initUser(user, username, password);
+    printf("\nWould you like to add a description to your profile? (y/n) ");
+    char choice;
+    scanf(" %c", &choice);
+    if (choice == 'y')
+    {
+        printf("\nEnter your description (max 160 characters): ");
+        scanf(" %160[^\n]", description);
+        initUser(user, username, password, description);
+    }
+    else
+    {
+        initUser(user, username, password, "");
+    }
+
     addToHashTable(table, user);
 
     clear();

@@ -15,7 +15,7 @@ The members are:
 /*
 Initializate User Struct
 */
-int initUser(User *user, char *username, char *password)
+int initUser(User *user, char *username, char *password, char *description)
 {
     // Tails Definition
     user->follows = (List *)malloc(sizeof(List));
@@ -29,6 +29,7 @@ int initUser(User *user, char *username, char *password)
     initList(user->followedBy);
     initList(user->tweets);
     strcpy(user->username, username);
+    strcpy(user->description, description);
     setPassword(user, password);
     return 1;
 }

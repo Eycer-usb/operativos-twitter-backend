@@ -9,7 +9,7 @@ struct User
 {
     char username[20];
     long int password;
-    char description[255];
+    char description[161];
     int tweetCount;
     List *tweets;
     List *follows;
@@ -18,7 +18,7 @@ struct User
     int followingCount;
 };
 
-int initUser(User *user, char *username, char *password);
+int initUser(User *user, char *username, char *password, char* description);
 void setPassword(User *user, char *password);
 int verifyPassword(User *user, char *password);
 int follow(User *follower, User *followed);
