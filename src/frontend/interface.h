@@ -5,10 +5,11 @@
 #include "./../backend/hashtable.h"
 
 void printImage(User user);
-void dashboard(User* user);
-void dashboardVisit(User* user, User* userV);
+void timeline(User *user, HashTable *table);
+void dashboardVisit(User *user, User *userVisited);
+void printFollowing(User *user);
 int prompt(User user, HashTable *table);
-int promptVisit(User *user, User *userV);
+int promptVisit(User *user, User *userVisited);
 int interface();
 
 #endif

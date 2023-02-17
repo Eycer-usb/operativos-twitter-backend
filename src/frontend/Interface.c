@@ -5,18 +5,32 @@
 #include "auth.h"
 #define clear() printf("\033[H\033[J");
 
-void dashboard(User *user)
+void timeline(User *user)
 {
-    printf("\n@%s", user->username);
-    printf("\nTweets: %i", user->tweetCount);
-    printf("\nFollowing: %i", 123);
-    printf("\nFollowers: %i", 9321);
-    printf("\n");
-    printf("\nMy Tweets\n");
-    printList(user->tweets);
+    printf("\033[0;36m");
+    printf("\nYOUR TIMELINE\n");
+    printf("\033[0;37m");
+
+    List *timeline = getUserTimeLine(user);
+    if (timeline == NULL)
+    {
+        printf("\nThere are no tweets on your timeline yet, follow someone to see their tweets.\n");
+    }
+    if (user->follows->content == NULL)
+    {
+        printf("\nYou haven't followed anyone yet. There are no tweets to show.\n");
+    }
+    else
+    {
+        printf("\n\n");
+        printf("%s", user->follows->content->user->username);
+        printf("\n\n");
+    }
+
+    printList(timeline);
 }
 
-int promptVisit(User *user, User *userV)
+int promptVisit(User *user, User *userVisited)
 {
     int should_continue = 0;
 
@@ -28,8 +42,9 @@ int promptVisit(User *user, User *userV)
         printf("\033[0;37m");
         scanf(" %[^\n]", prompt);
 
-        if (prompt == "follow") {
-            follow(user, userV);
+        if (!strcmp(prompt, "follow"))
+        {
+            follow(user, userVisited);
             break;
         }
         else
@@ -40,7 +55,7 @@ int promptVisit(User *user, User *userV)
             }
             else if (strcmp(prompt, "return") && strlen(prompt) > 1)
             {
-                printf("\033[0;31mEntrada inválida\n");
+                printf("\033[0;31mInvalid input\n");
             }
             break;
         }
@@ -49,18 +64,54 @@ int promptVisit(User *user, User *userV)
     return should_continue;
 }
 
-void dashboardVisit(User *user, User *userV)
+void dashboardVisit(User *user, User *userVisited)
 {
     do
     {
-        printf("\n%s's profile", userV->username);
-        printf("\nTweets: %i", userV->tweetCount);
-        printf("\nFollowing: %i", 123);
-        printf("\nFollowers: %i", 9321);
+        printf("\n%s's profile", userVisited->username);
+        printf("\nTweets: %i", userVisited->tweetCount);
+        printf("\nFollowing: %i", userVisited->followingCount);
+        printf("\nFollowers: %i", userVisited->followersCount);
         printf("\n");
-        printf("\nMy Tweets\n");
-        printList(userV->tweets);
-    } while (promptVisit(user, userV) != -1);
+        printf("\n%s's Tweets\n", userVisited->username);
+        printList(userVisited->tweets);
+    } while (promptVisit(user, userVisited) != -1);
+}
+
+void printFollowing(User *user)
+{
+    if (user->follows == NULL)
+    {
+        printf("\nYou don't have followings.\n");
+    }
+    else
+    {
+        List *followings = user->follows;
+        printf("\nThis is a list of your followings\n");
+        for (; followings->content != NULL; followings = followings->next)
+        {
+            printf("\n- %s", followings->content->user->username);
+        }
+        printf("\n");
+    }
+}
+
+void printFollowers(User *user)
+{
+    if (user->follows == NULL)
+    {
+        printf("\nYou don't have followers.\n");
+    }
+    else
+    {
+        List *followers = user->followedBy;
+        printf("\nThis is a list of your followers\n");
+        for (; followers->content != NULL; followers = followers->next)
+        {
+            printf("\n- %s", followers->content->user->username);
+        }
+        printf("\n");
+    }
 }
 
 int prompt(User *user, HashTable *table)
@@ -70,15 +121,16 @@ int prompt(User *user, HashTable *table)
     while (!should_continue)
     {
         char prompt[281];
-
-        printf("\033[0;31mPrompt: ");
-        printf("\033[0;37m");
-        scanf(" %[^\n]", prompt);
+        printf("\nTweet, search an user, or type an option from below:\n\n");
+        printf("tweets\n");
+        printf("followers\n");
+        printf("following\n");
+        printf("logout\n\n");
+        scanf(" %280[^\n]", prompt);
 
         switch (prompt[0])
         {
         case '+':
-            /* Elimina el símbolo "+" del prompt */
             memmove(prompt, prompt + 1, strlen(prompt));
             newTweet(user, prompt);
             printf("Tweet enviado\n");
@@ -87,14 +139,18 @@ int prompt(User *user, HashTable *table)
             break;
 
         case '@':
-            /* Busca los tweets del otro usuario */
             clear();
-
-            if (!strcmp(memmove(prompt, prompt + 1, strlen(prompt)), user->username)) {
+            memmove(prompt, prompt + 1, strlen(prompt));
+            if (strcmp(prompt, user->username) == 0)
+            {
                 printf("\nYOU CAN'T LOOK FOR YOURSELF");
-            } else if (getUserFromHashTable(table, memmove(prompt, prompt + 1, strlen(prompt)))) {
-                dashboardVisit(user, getUserFromHashTable(table, memmove(prompt, prompt + 1, strlen(prompt))));
-            } else {
+            }
+            else if (getUserFromHashTable(table, prompt))
+            {
+                dashboardVisit(user, getUserFromHashTable(table, prompt));
+            }
+            else
+            {
                 printf("\nThe user you're trying to search for doesn't exist");
             }
             should_continue = 1;
@@ -104,12 +160,26 @@ int prompt(User *user, HashTable *table)
             if (!strcmp(prompt, "logout"))
             {
                 printf("Logout\n");
-                // logOut(user, table);
                 should_continue = -1;
             }
-            else if (strcmp(prompt, "logout") && strlen(prompt) > 1)
+            else if (!strcmp(prompt, "following"))
             {
-                printf("\033[0;31mEntrada inválida\n");
+                clear();
+                printFollowing(user);
+            }
+            else if (!strcmp(prompt, "followers"))
+            {
+                clear();
+                printFollowers(user);
+            }
+            else if (!strcmp(prompt, "tweets"))
+            {
+                clear();
+                printList(user->tweets);
+            }
+            else
+            {
+                printf("\033[0;31mInvalid Input\n");
             }
             break;
         }
@@ -132,7 +202,6 @@ int interface()
 
     HashTable table;
     initHashTable(&table);
-    // newTweet(&blanyer, "primer twitt");
     do
     {
         User *user;
@@ -143,7 +212,7 @@ int interface()
         }
         do
         {
-            dashboard(user);
+            timeline(user);
         } while (prompt(user, &table) != -1);
     } while (1);
 }

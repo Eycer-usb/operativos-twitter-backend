@@ -19,10 +19,14 @@ int initUser(User *user, char *username, char *password)
 {
     // Tails Definition
     user->follows = (List *)malloc(sizeof(List));
+    user->followedBy = (List *)malloc(sizeof(List));
     user->tweets = (List *)malloc(sizeof(List));
     user->password = -1;
     user->tweetCount = 0;
+    user->followersCount = 0;
+    user->followingCount = 0;
     initList(user->follows);
+    initList(user->followedBy);
     initList(user->tweets);
     strcpy(user->username, username);
     setPassword(user, password);
@@ -53,9 +57,18 @@ Add the followed to the follow list of the follower
 */
 int follow(User *follower, User *followed)
 {
+    /* Updating follows list */
     ListContent *content = (ListContent *)malloc(sizeof(ListContent));
     content->user = followed;
     follower->follows = listPush(follower->follows, content, time(NULL), NULL);
+
+    /* Updating followedBy list */
+    ListContent *followedContent = (ListContent *)malloc(sizeof(ListContent));
+    followedContent->user = follower;
+    follower->followedBy = listPush(follower->followedBy, followedContent, time(NULL), NULL);
+
+    follower->followingCount++;
+    followed->followersCount++;
     return 1;
 }
 

@@ -63,7 +63,7 @@ void printList(List *list)
 
         if (i->content == NULL && i->next == NULL && i->time == -1)
         {
-            printf("ENDLIST\n");
+            printf("\nENDLIST\n");
         }
         else
         {

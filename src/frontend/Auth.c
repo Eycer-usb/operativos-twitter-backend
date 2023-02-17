@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include "auth.h"
 #include "./../backend/hashtable.h"
-#define clear() printf("\033[H\033[J"); // clear() ya es una función del sistema.
+#define clear() printf("\033[H\033[J");
 
 int loggerOptions()
 {
-    char option[6];
+    char *option = (char *)malloc(sizeof(char) * 20);
 
     do
     {
@@ -15,9 +15,9 @@ int loggerOptions()
         printf("\033[0;32m");
         printf("DON'T MISS WHAT'S HAPPENING! LOGIN, SIGNUP OR LEAVE\n");
         printf("\033[0m");
-        printf("\n1. login");
-        printf("\n2. signup");
-        printf("\n3. leave");
+        printf("\n- login");
+        printf("\n- signup");
+        printf("\n- leave");
 
         printf("\n\nPlease type an option to continue: ");
         scanf("%s", option);
@@ -44,39 +44,44 @@ int loggerOptions()
 
 User *logIn(HashTable *table)
 {
-    char username[20];
-    char password[20];
-    clear();
-    int i = 0;
-    {   
-        
-        if (i == 0) {
-            printf("\nLOGIN");
-            printf("\n\nEnter username: ");
-            scanf("%s", username);
-        } else {
-            printf("\nLOGIN");
-            printf("\n\nUsername does not exist");
-            printf("\nEnter username: ");
-            scanf("%s", username);
-        }
-        i = 1;
-    } while (!getUserFromHashTable(table, username));
-    
-    do
-    {   
-        if (i == 0) {
-            printf("\nEnter password: ");
-            scanf("%s", password);
-        } else {
-            printf("\n\nWrong Password!");
-            printf("\nEnter password again: ");
-            scanf("%s", password);
-        }
-        i = 1;
-    } while (!verifyPassword(getUserFromHashTable(table, username), password));
+    char *username = malloc(20 * sizeof(char));
+    char *password = malloc(20 * sizeof(char));
 
     clear();
+    int i = 0;
+
+    if (i == 0)
+    {
+        printf("\nLOGIN");
+        printf("\n\nEnter username: ");
+        scanf("%s", username);
+    }
+    else
+    {
+        printf("\nLOGIN");
+        printf("\n\nUsername does not exist");
+        printf("\nEnter username: ");
+        scanf("%s", username);
+    }
+    i = 1;
+    while (!getUserFromHashTable(table, username))
+        do
+        {
+            if (i == 1)
+            {
+                printf("\nEnter password: ");
+                scanf("%s", password);
+            }
+            else
+            {
+                printf("\n\nWrong Password!");
+                printf("\nEnter password again: ");
+                scanf("%s", password);
+            }
+            i = 2;
+        } while (!verifyPassword(getUserFromHashTable(table, username), password));
+    clear();
+    free(password);
     return getUserFromHashTable(table, username);
 }
 
@@ -95,23 +100,26 @@ User *signIn(HashTable *table)
 
     do
     {
-        if (i == 0) {
+        if (i == 0)
+        {
             printf("\033[0;31m");
-            printf("\n\nSIGN IN");
+            printf("SIGN UP");
+            printf("\033[0m");
             printf("\n\nEnter username: ");
             scanf("%19s", username);
-        } else {
+        }
+        else
+        {
             printf("\033[0;31m");
             printf("\n\nThe user name already exists");
             printf("\nEnter username: ");
+            printf("\033[0m");
             scanf("%19s", username);
         }
         i = 1;
     } while (getUserFromHashTable(table, username));
-        
-    printf("\033[0;31m");
+
     printf("\nEnter password: ");
-    printf("\033[0;37m");
     scanf("%19s", password);
 
     i = 0;
@@ -119,9 +127,7 @@ User *signIn(HashTable *table)
     {
         if (i == 0)
         {
-            printf("\033[0;31m");
             printf("\nRepeat password: ");
-            printf("\033[0;37m");
             scanf("%19s", passwordVerification);
         }
         else
@@ -129,7 +135,7 @@ User *signIn(HashTable *table)
             printf("\033[0;31m");
             printf("\nPasswords do not match");
             printf("\nRepeat password: ");
-            printf("\033[0;37m");
+            printf("\033[0m");
             scanf("%19s", passwordVerification);
         }
         i = 1;
@@ -158,7 +164,7 @@ void logOut(User *user, HashTable *table)
     char password[20];
     int i = 0;
 
-    // clear();
+    clear();
     printf("\033[0;31m");
     printf("\n\nARE YOU LEAVING?");
     printf("\n\nEnter username: ");
