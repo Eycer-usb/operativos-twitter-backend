@@ -30,6 +30,46 @@ void timeline(User *user)
     printList(timeline);
 }
 
+void printFollowing(User *user)
+{
+    if (user->follows == NULL)
+    {
+        printf("\nThere is no user following.\n");
+    }
+    else
+    {
+        List *followings = user->follows;
+        printf("\033[0;36m");
+        printf("\nFOLLOWING\n");
+        printf("\033[0m");
+        for (; followings->content != NULL; followings = followings->next)
+        {
+            printf("\n- %s", followings->content->user->username);
+        }
+        printf("\n");
+    }
+}
+
+void printFollowers(User *user)
+{
+    if (user->followedBy == NULL)
+    {
+        printf("\nThere is no followers.\n");
+    }
+    else
+    {
+        List *followers = user->followedBy;
+        printf("\033[0;36m");
+        printf("\nFOLLOWERS\n");
+        printf("\033[0m");
+        for (; followers->content != NULL; followers = followers->next)
+        {
+            printf("\n- %s", followers->content->user->username);
+        }
+        printf("\n");
+    }
+}
+
 int promptVisit(User *user, User *userVisited)
 {
     int should_continue = 0;
@@ -46,6 +86,16 @@ int promptVisit(User *user, User *userVisited)
         {
             follow(user, userVisited);
             break;
+        }
+        else if (!strcmp(prompt, "following"))
+        {
+            clear();
+            printFollowing(userVisited);
+        }
+        else if (!strcmp(prompt, "followers"))
+        {
+            clear();
+            printFollowers(userVisited);
         }
         else
         {
@@ -81,42 +131,6 @@ void dashboardVisit(User *user, User *userVisited)
         printf("\033[0m");
         printList(userVisited->tweets);
     } while (promptVisit(user, userVisited) != -1);
-}
-
-void printFollowing(User *user)
-{
-    if (user->follows == NULL)
-    {
-        printf("\nYou don't have followings.\n");
-    }
-    else
-    {
-        List *followings = user->follows;
-        printf("\nThis is a list of your followings\n");
-        for (; followings->content != NULL; followings = followings->next)
-        {
-            printf("\n- %s", followings->content->user->username);
-        }
-        printf("\n");
-    }
-}
-
-void printFollowers(User *user)
-{
-    if (user->followedBy == NULL)
-    {
-        printf("\nYou don't have followers.\n");
-    }
-    else
-    {
-        List *followers = user->followedBy;
-        printf("\nThis is a list of your followers\n");
-        for (; followers->content != NULL; followers = followers->next)
-        {
-            printf("\n- %s", followers->content->user->username);
-        }
-        printf("\n");
-    }
 }
 
 int prompt(User *user, HashTable *table)
