@@ -89,7 +89,14 @@ int prompt(User *user, HashTable *table)
         case '@':
             /* Busca los tweets del otro usuario */
             clear();
-            dashboardVisit(user, getUserFromHashTable(table, memmove(prompt, prompt + 1, strlen(prompt))));
+
+            if (!strcmp(memmove(prompt, prompt + 1, strlen(prompt)), user->username)) {
+                printf("\nYOU CAN'T LOOK FOR YOURSELF");
+            } else if (getUserFromHashTable(table, memmove(prompt, prompt + 1, strlen(prompt)))) {
+                dashboardVisit(user, getUserFromHashTable(table, memmove(prompt, prompt + 1, strlen(prompt))));
+            } else {
+                printf("\nThe user you're trying to search for doesn't exist");
+            }
             should_continue = 1;
             break;
 
