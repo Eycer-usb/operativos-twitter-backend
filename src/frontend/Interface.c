@@ -37,7 +37,7 @@ int prompt(User *user, HashTable *table)
             if (!strcmp(prompt, "logout"))
             {
                 printf("Logout\n");
-                //logOut(user, table);
+                // logOut(user, table);
                 should_continue = -1;
             }
             else if (strcmp(prompt, "logout") && strlen(prompt) > 1)
@@ -56,7 +56,7 @@ int searchUser(char *username)
     // strcmp()
 }
 
-void dashboard(User* user)
+void dashboard(User *user)
 {
     printf("\n@%s", user->username);
     printf("\nTweets: %i", 1550);
@@ -74,28 +74,21 @@ void dashboard(User* user)
  * and twitter options.
  */
 int interface()
-{   
-    
+{
+
     HashTable table;
     initHashTable(&table);
-    User blanyer;
-    initUser(&blanyer, "blanyer", "blanyer#123");
-    newTweet(&blanyer, "primer twitt");
-    addToHashTable(&table, &blanyer);
-    
+    // newTweet(&blanyer, "primer twitt");
     do
     {
-        User* user;
+        User *user;
         user = logger(&table);
-        //newTweet(&blanyer, "primer twitt");
-        do {
+        do
+        {
             printf("probando");
             clear();
             dashboard(user);
-            //printf("%s", user->username);
-            newTweet(user, "primer twitt");
-            
-            //printList(user->tweets);
+            printList(user->tweets);
         } while (prompt(user, &table) != -1);
     } while (1);
 }

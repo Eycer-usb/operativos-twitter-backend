@@ -34,11 +34,16 @@ Given a List store Datetime formated in buffer
 */
 int getSavedDateTime(List *list, char *buffer)
 {
+    if (list == NULL)
+    {
+        return 0; // puntero nulo
+    }
+
     time_t timer = (list->time);
     struct tm *tm_info;
     tm_info = localtime(&timer);
 
-    strftime(buffer, 26, "%d-%m-%Y %H:%M", tm_info);
+    strftime(buffer, 27, "%d-%m-%Y %H:%M:%S", tm_info);
     return 1;
 }
 
@@ -51,19 +56,20 @@ void printList(List *list)
     List *i = list;
     while (i)
     {
+        if (i == NULL)
+        {
+            break;
+        }
 
-        if (i && i->content == NULL && i->next == NULL && i->time == -1)
+        if (i->content == NULL && i->next == NULL && i->time == -1)
         {
             printf("ENDLIST\n");
         }
         else
         {
-            char buffer_time[17];
+            char buffer_time[27];
             getSavedDateTime(i, buffer_time);
-            printf("%s\n", i->owner);
-            printf("%s\n", i->content->text);
-            printf("%s\n", buffer_time); 
-
+            formatTweet(i->content->text, i->owner, buffer_time);
         }
         i = i->next;
     }

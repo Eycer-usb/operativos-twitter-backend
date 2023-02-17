@@ -42,12 +42,13 @@ int loggerOptions()
     } while (1);
 }
 
-User* logIn(HashTable* table)
+User *logIn(HashTable *table)
 {
     char username[20];
     char password[20];
 
-    do {
+    do
+    {
         clear();
         printf("\nLOGIN");
         printf("\n\nEnter username: ");
@@ -69,12 +70,11 @@ User* logIn(HashTable* table)
  * It returns a User struct containing the entered information
  * @return User: a struct containing the entered username and password
  */
-User* signIn(HashTable* table)
+User *signIn(HashTable *table)
 {
     char username[20];
     char password[20];
     char passwordVerification[20];
-
 
     do
     {
@@ -83,15 +83,12 @@ User* signIn(HashTable* table)
         printf("\033[0;31m");
         printf("\n\nSIGN IN");
         printf("\n\nEnter username: ");
-
-        printf("\033[0;37m");
-        scanf("%s", username);
+        scanf("%19s", username);
 
         printf("\033[0;31m");
         printf("\nEnter password: ");
-
         printf("\033[0;37m");
-        scanf("%s", password);
+        scanf("%19s", password);
 
         do
         {
@@ -99,29 +96,29 @@ User* signIn(HashTable* table)
             {
                 printf("\033[0;31m");
                 printf("\nRepeat password: ");
-
                 printf("\033[0;37m");
-                scanf("%s", passwordVerification);
+                scanf("%19s", passwordVerification);
             }
             else
             {
                 printf("\033[0;31m");
                 printf("\nPasswords do not match");
                 printf("\nRepeat password: ");
-
                 printf("\033[0;37m");
-                scanf("%s", passwordVerification);
+                scanf("%19s", passwordVerification);
             }
             i = 1;
         } while (strcmp(password, passwordVerification) != 0);
     } while (getUserFromHashTable(table, username));
 
-    User user;
-    initUser(&user, username, password);
-    addToHashTable(table, &user);
-    // User* usuario = getUserFromHashTable(table, username);
-    // printf("%s", usuario->username);
-    // scanf("%s", username);
+    User *user = malloc(sizeof(User));
+    if (!user)
+    {
+        printf("Error: could not allocate memory for User\n");
+        return NULL;
+    }
+    initUser(user, username, password);
+    addToHashTable(table, user);
     return getUserFromHashTable(table, username);
 }
 
@@ -149,7 +146,7 @@ void logOut(User *user, HashTable *table)
     printf("\033[0;37m");
     scanf("%s", password);
 
-    printf("\n%i\n",strcmp(username, user->username));
+    printf("\n%i\n", strcmp(username, user->username));
 
     while (!isLoggedOut)
     {
@@ -173,7 +170,7 @@ void logOut(User *user, HashTable *table)
  * Prompts the user to either log in, sign up or leave.
  * @return User: the user that logged in or signed up
  */
-User* logger(HashTable* table)
+User *logger(HashTable *table)
 {
 
     int option = loggerOptions();
