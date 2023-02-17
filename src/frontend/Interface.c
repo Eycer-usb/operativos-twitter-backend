@@ -56,9 +56,9 @@ int searchUser(char *username)
     // strcmp()
 }
 
-void dashboard(User user)
+void dashboard(User* user)
 {
-    printf("\n@%s", user.username);
+    printf("\n@%s", user->username);
     printf("\nTweets: %i", 1550);
     printf("\nFollowing: %i", 123);
     printf("\nFollowers: %i", 9321);
@@ -80,16 +80,22 @@ int interface()
     initHashTable(&table);
     User blanyer;
     initUser(&blanyer, "blanyer", "blanyer#123");
+    newTweet(&blanyer, "primer twitt");
     addToHashTable(&table, &blanyer);
     
     do
     {
-        User user = logger(&table);
+        User* user;
+        user = logger(&table);
+        //newTweet(&blanyer, "primer twitt");
         do {
             printf("probando");
             clear();
             dashboard(user);
-            printList(user.tweets);
-        } while (prompt(&user, &table) != -1);
+            printf("%s", user->username);
+            newTweet(user, "primer twitt");
+            
+            printList(user->tweets);
+        } while (prompt(user, &table) != -1);
     } while (1);
 }

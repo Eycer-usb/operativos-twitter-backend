@@ -60,7 +60,10 @@ void printList(List *list)
         {
             char buffer_time[17];
             getSavedDateTime(i, buffer_time);
-            formatTweet(i->content->text, i->owner, buffer_time);
+            printf("%s\n", i->owner);
+            printf("%s\n", i->content->text);
+            printf("%s\n", buffer_time); 
+
         }
         i = i->next;
     }

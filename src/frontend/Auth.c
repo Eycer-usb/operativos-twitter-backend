@@ -42,7 +42,7 @@ int loggerOptions()
     } while (1);
 }
 
-User logIn(HashTable* table)
+User* logIn(HashTable* table)
 {
     char username[20];
     char password[20];
@@ -56,9 +56,12 @@ User logIn(HashTable* table)
         scanf("%s", password);
 
     } while (!getUserFromHashTable(table, username));
-   
+    // User* user = getUserFromHashTable(table, username);
+    // printf("%s", user->username);
+    // scanf("%s", username);
+    // printList(user->tweets);
 
-    return *getUserFromHashTable(table, username);
+    return getUserFromHashTable(table, username);
 }
 
 /**
@@ -66,7 +69,7 @@ User logIn(HashTable* table)
  * It returns a User struct containing the entered information
  * @return User: a struct containing the entered username and password
  */
-User signIn(HashTable* table)
+User* signIn(HashTable* table)
 {
     char username[20];
     char password[20];
@@ -116,7 +119,10 @@ User signIn(HashTable* table)
     User user;
     initUser(&user, username, password);
     addToHashTable(table, &user);
-    return user;
+    // User* usuario = getUserFromHashTable(table, username);
+    // printf("%s", usuario->username);
+    // scanf("%s", username);
+    return getUserFromHashTable(table, username);
 }
 
 /**
@@ -167,23 +173,22 @@ void logOut(User *user, HashTable *table)
  * Prompts the user to either log in, sign up or leave.
  * @return User: the user that logged in or signed up
  */
-User logger(HashTable* table)
+User* logger(HashTable* table)
 {
-    User user;
+
     int option = loggerOptions();
     if (option == 1)
     {
-        user = logIn(table);
+        return logIn(table);
     }
     else if (option == 2)
     {
-        user = signIn(table);
+        return signIn(table);
     }
     else
     {
         printf("\033[0;36m");
         printf("\nCOME BACK SOON!\n");
-        exit(0);
+        return NULL;
     }
-    return user;
 }
