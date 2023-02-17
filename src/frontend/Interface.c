@@ -121,11 +121,14 @@ int prompt(User *user, HashTable *table)
     while (!should_continue)
     {
         char prompt[281];
-        printf("\nTweet, search an user, or type an option from below:\n\n");
+        printf("\033[0;34m");
+        printf("\nTWEET, SEARCH AN USER OR TYPE AN OPTION FROM BELOW\n\n");
+        printf("\033[0m");
         printf("tweets\n");
         printf("followers\n");
         printf("following\n");
         printf("logout\n\n");
+        printf("( @[username] to search an user, +[tweet] to tweet ): ");
         scanf(" %280[^\n]", prompt);
 
         switch (prompt[0])
@@ -212,6 +215,7 @@ int interface()
         }
         do
         {
+            clear();
             timeline(user);
         } while (prompt(user, &table) != -1);
     } while (1);

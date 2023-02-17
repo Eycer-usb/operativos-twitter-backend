@@ -31,7 +31,8 @@ int loggerOptions()
             return 2;
         }
         else if (strcmp(option, "leave") == 0)
-        {
+        {   
+            clear();
             return 3;
         }
         else
@@ -52,13 +53,17 @@ User *logIn(HashTable *table)
 
     if (i == 0)
     {
+        printf("\033[0;32m");
         printf("\nLOGIN");
+        printf("\033[0m");
         printf("\n\nEnter username: ");
         scanf("%s", username);
     }
     else
     {
+        printf("\033[0;32m");
         printf("\nLOGIN");
+        printf("\033[0m");
         printf("\n\nUsername does not exist");
         printf("\nEnter username: ");
         scanf("%s", username);
