@@ -83,6 +83,9 @@ int interface()
     {
         User *user;
         user = logger(&table);
+        if (user == NULL) {
+            break;
+        }
         do
         {
             printf("probando");
