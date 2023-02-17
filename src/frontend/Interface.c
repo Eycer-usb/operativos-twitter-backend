@@ -114,19 +114,6 @@ int searchUser(char *username)
     // strcmp()
 }
 
-void dashboard(User *user)
-{
-    printf("\n@%s", user->username);
-    printf("\nTweets: %i", 1550);
-    printf("\nFollowing: %i", 123);
-    printf("\nFollowers: %i", 9321);
-    printf("\n");
-    printf("\nMy Tweets\n");
-    /*
-    IMPRMIR LISTA DE TWITTS DE SEGUIDORES
-    */
-}
-
 /**
  * This function allows the user to see the GUI and interact with the differents Auth
  * and twitter options.
