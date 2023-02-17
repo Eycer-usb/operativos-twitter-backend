@@ -103,7 +103,7 @@ void printFollowing(User *user)
 
 void printFollowers(User *user)
 {
-    if (user->follows == NULL)
+    if (user->followedBy == NULL)
     {
         printf("\nYou don't have followers.\n");
     }

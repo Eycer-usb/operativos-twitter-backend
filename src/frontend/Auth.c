@@ -5,6 +5,13 @@
 #include "./../backend/hashtable.h"
 #define clear() printf("\033[H\033[J");
 
+/**
+ * This function prompts the user to select one of three options: login, signup, or leave.
+ * It continues prompting until a valid option is selected. If "login" is selected, the function returns 1.
+ *  "signup" is selected, the function returns 2. If "leave" is selected, the function clears the screen and
+ * returns 3. If an invalid option is selected, the function prints an error message and continues prompting.
+ */
+
 int loggerOptions()
 {
     char *option = (char *)malloc(sizeof(char) * 20);
@@ -43,6 +50,14 @@ int loggerOptions()
     } while (1);
 }
 
+/**
+ * This function logs in a user by prompting the user to enter a valid username and password
+ * from a hash table of users. If the username entered does not exist in the hash table, the user
+ * is prompted to enter a valid username again. If the password entered for the username is
+ * incorrect, the user is prompted to enter the correct password. Once a valid username and
+ * password are entered, the function returns the corresponding User struct from the hash
+ * table.
+ */
 User *logIn(HashTable *table)
 {
     char *username = malloc(20 * sizeof(char));
