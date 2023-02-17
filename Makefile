@@ -27,7 +27,8 @@ FRONTENDFILES =	$(TEMPDIR)/Auth.o \
 				$(TEMPDIR)/Interface.o
 
 # Utils temporary files
-UTILSFILES =	$(TEMPDIR)/FormatTweet.o
+UTILSFILES =	$(TEMPDIR)/FormatTweet.o \
+				$(TEMPDIR)/SearchMentions.o 
 
 # Objective temporary files
 FILES =	$(BACKENDFILES)\
@@ -91,6 +92,7 @@ $(TEMPDIR)/FormatTweet.o:	$(TEMPDIR) \
 					$(SRCDIR)/utils/formatTweet.h \
 					$(SRCDIR)/utils/FormatTweet.c
 	$(COMPILE) $(SRCDIR)/utils/FormatTweet.c -o $(TEMPDIR)/FormatTweet.o
+
 $(TEMPDIR)/SearchMentions.o:	$(TEMPDIR) \
 					$(SRCDIR)/utils/searchMentions.h \
 					$(SRCDIR)/utils/SearchMentions.c
