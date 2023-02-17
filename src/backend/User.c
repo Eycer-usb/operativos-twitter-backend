@@ -21,6 +21,7 @@ int initUser(User *user, char *username, char *password)
     user->follows = (List *)malloc(sizeof(List));
     user->tweets = (List *)malloc(sizeof(List));
     user->password = -1;
+    user->tweetCount = 0;
     initList(user->follows);
     initList(user->tweets);
     strcpy(user->username, username);
@@ -70,6 +71,7 @@ int newTweet(User *user, char *text)
     strcpy(content->text, text);
     owner = user->username;
     user->tweets = listPush(user->tweets, content, time(NULL), owner);
+    user->tweetCount++;
     return 1;
 }
 
