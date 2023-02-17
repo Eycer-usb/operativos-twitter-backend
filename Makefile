@@ -112,4 +112,4 @@ $(TEMPDIR)/backend.o:	$(TEMPDIR) \
 # The backend binary depends of backend files just for test
 $(BACKEND): $(BACKENDFILES) \
 			$(TEMPDIR)/backend.o
-	$(LINK) $(BACKENDFILES) $(TEMPDIR)/backend.o -o $(BACKEND)
+	$(LINK) $(UTILSFILES) $(BACKENDFILES) $(TEMPDIR)/backend.o -o $(BACKEND)

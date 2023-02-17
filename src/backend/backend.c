@@ -16,7 +16,7 @@ Set of test to User Struct
 int testUser()
 {
     User user;
-    initUser(&user, "eycer", "Eros#123");
+    initUser(&user, "eycer", "Eros#123", "Soy Eros");
     newTweet( &user, "This is the first User Tweet!"  );
     newTweet( &user, "This is the second User Tweet!"  );
     newTweet( &user, "This is the last User Tweet!"  );
@@ -30,9 +30,9 @@ This function is an example for generate timeline of tweets
 int testTimeLine()
 {
     User eycer, cesar, blanyer;
-    initUser(&eycer, "eycer", "Eros#123");
-    initUser(&cesar, "cesar", "Cesar#123");
-    initUser(&blanyer, "blanyer", "Blanyer#123");
+    initUser(&eycer, "eycer", "Eros#123", "Soy Eros");
+    initUser(&cesar, "cesar", "Cesar#123", "Soy Cesar");
+    initUser(&blanyer, "blanyer", "Blanyer#123", "Soy Blanyer");
     follow(&eycer, &eycer);
     follow(&eycer, &cesar);
     follow(&eycer, &blanyer);
@@ -77,7 +77,7 @@ int testHashTable()
     HashTable table;
     initHashTable(&table);
     User eycer;
-    initUser(&eycer, "eycer", "Eros#123");
+    initUser(&eycer, "eycer", "Eros#123", "Soy Eros");
     newTweet( &eycer, "New Tweet from HashTable!"  );
     addToHashTable(&table, &eycer);
     //printf("%d\n", addToHashTable(&table, &eycer));
@@ -98,15 +98,15 @@ int testAll()
 
     // To register Users
     User eycer;
-    initUser(&eycer, "eycer", "Eros#123");
+    initUser(&eycer, "eycer", "Eros#123","Soy Eros");
     addToHashTable(&table, &eycer);
 
     User blanyer;
-    initUser(&blanyer, "blanyer", "blanyer#123");
+    initUser(&blanyer, "blanyer", "blanyer#123", "Soy Blanyer");
     addToHashTable(&table, &blanyer);
 
     User cesar;
-    initUser(&cesar, "cesar", "cesar#123");
+    initUser(&cesar, "cesar", "cesar#123", "Soy Cesar");
     addToHashTable(&table, &cesar);
     
     // To tweet

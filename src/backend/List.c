@@ -1,5 +1,5 @@
 #include "list.h"
-#include "./../utils/formatTweet.h"
+#include "../utils/formatTweet.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
