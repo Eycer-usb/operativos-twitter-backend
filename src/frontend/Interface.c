@@ -68,12 +68,16 @@ void dashboardVisit(User *user, User *userVisited)
 {
     do
     {
-        printf("\n%s's profile", userVisited->username);
+        printf("\033[0;32m");
+        printf("\n%s's Profile", userVisited->username);
+        printf("\033[0m");
         printf("\nTweets: %i", userVisited->tweetCount);
         printf("\nFollowing: %i", userVisited->followingCount);
         printf("\nFollowers: %i", userVisited->followersCount);
         printf("\n");
+        printf("\033[0;36m");
         printf("\n%s's Tweets\n", userVisited->username);
+        printf("\033[0m");
         printList(userVisited->tweets);
     } while (promptVisit(user, userVisited) != -1);
 }
@@ -183,6 +187,7 @@ int prompt(User *user, HashTable *table)
             else
             {
                 printf("\033[0;31mInvalid Input\n");
+                printf("\033[0m");
             }
             break;
         }

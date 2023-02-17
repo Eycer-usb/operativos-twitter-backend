@@ -57,6 +57,18 @@ Add the followed to the follow list of the follower
 */
 int follow(User *follower, User *followed)
 {
+    /* Verifying if the followed user is already being followed */
+    List *temp = follower->follows;
+    while (temp != NULL)
+    {
+        if (temp->content != NULL && temp->content->user == followed)
+        {
+            printf("You are already following %s.\n", followed->username);
+            return 0;
+        }
+        temp = temp->next;
+    }
+
     /* Updating follows list */
     ListContent *content = (ListContent *)malloc(sizeof(ListContent));
     content->user = followed;
@@ -65,10 +77,11 @@ int follow(User *follower, User *followed)
     /* Updating followedBy list */
     ListContent *followedContent = (ListContent *)malloc(sizeof(ListContent));
     followedContent->user = follower;
-    follower->followedBy = listPush(follower->followedBy, followedContent, time(NULL), NULL);
+    followed->followedBy = listPush(followed->followedBy, followedContent, time(NULL), NULL);
 
     follower->followingCount++;
     followed->followersCount++;
+    printf("You are now following %s.\n", followed->username);
     return 1;
 }
 
