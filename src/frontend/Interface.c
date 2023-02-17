@@ -5,6 +5,62 @@
 #include "auth.h"
 #define clear() printf("\033[H\033[J");
 
+void dashboard(User *user)
+{   
+    printf("\n@%s", user->username);
+    printf("\nTweets: %i", 1550);
+    printf("\nFollowing: %i", 123);
+    printf("\nFollowers: %i", 9321);
+    printf("\n");
+    printf("\nMy Tweets\n");
+    printList(user->tweets);
+
+}
+
+int promptVisit(User *user, User *userV) 
+{
+    int should_continue = 0;
+
+    while (!should_continue)
+    {
+        char prompt[281];
+
+        printf("\033[0;31mPrompt: ");
+        printf("\033[0;37m");
+        scanf(" %[^\n]", prompt);
+
+        if (prompt == "follow") {
+            break;
+        } else {
+            if (!strcmp(prompt, "return"))
+            {
+                should_continue = -1;
+            }
+            else if (strcmp(prompt, "return") && strlen(prompt) > 1)
+            {
+                printf("\033[0;31mEntrada inválida\n");
+            }
+            break;
+        }
+    }
+    clear();
+    return should_continue;
+}
+
+void dashboardVisit(User *user, User *userV)
+{   
+    do
+    {   
+        printf("\n%s's profile", userV->username);
+        printf("\nTweets: %i", 1550);
+        printf("\nFollowing: %i", 123);
+        printf("\nFollowers: %i", 9321);
+        printf("\n");
+        printf("\nMy Tweets\n");
+        printList(userV->tweets);
+    } while (promptVisit(user, userV) != -1);
+}
+
 int prompt(User *user, HashTable *table)
 {
     int should_continue = 0;
@@ -25,11 +81,13 @@ int prompt(User *user, HashTable *table)
             newTweet(user, prompt);
             printf("Tweet enviado\n");
             should_continue = 1;
+            clear();
             break;
 
         case '@':
             /* Busca los tweets del otro usuario */
-            printf("Usuario buscado\n");
+            clear();
+            dashboardVisit(user, getUserFromHashTable(table, memmove(prompt, prompt + 1, strlen(prompt))));
             should_continue = 1;
             break;
 
@@ -56,18 +114,7 @@ int searchUser(char *username)
     // strcmp()
 }
 
-void dashboard(User *user)
-{
-    printf("\n@%s", user->username);
-    printf("\nTweets: %i", 1550);
-    printf("\nFollowing: %i", 123);
-    printf("\nFollowers: %i", 9321);
-    printf("\n");
-    printf("\nMy Tweets\n");
-    /*
-    IMPRMIR LISTA DE TWITTS DE SEGUIDORES
-    */
-}
+
 
 /**
  * This function allows the user to see the GUI and interact with the differents Auth
@@ -88,10 +135,7 @@ int interface()
         }
         do
         {
-            printf("probando");
-            clear();
             dashboard(user);
-            printList(user->tweets);
         } while (prompt(user, &table) != -1);
     } while (1);
 }

@@ -68,6 +68,7 @@ User *logIn(HashTable *table)
         i = 1;
     } while (!verifyPassword(getUserFromHashTable(table, username), password));
 
+    clear();
     return getUserFromHashTable(table, username);
 }
 
@@ -134,6 +135,8 @@ User *signIn(HashTable *table)
     }
     initUser(user, username, password);
     addToHashTable(table, user);
+
+    clear();
     return getUserFromHashTable(table, username);
 }
 
