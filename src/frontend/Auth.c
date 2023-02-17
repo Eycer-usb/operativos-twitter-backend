@@ -46,15 +46,23 @@ User *logIn(HashTable *table)
 {
     char username[20];
     char password[20];
-
-    do
-    {
-        clear();
-        printf("\nLOGIN");
-        printf("\n\nEnter username: ");
-        scanf("%s", username);
-    } while (!getUserFromHashTable(table, username));
+    clear();
     int i = 0;
+    {   
+        
+        if (i == 0) {
+            printf("\nLOGIN");
+            printf("\n\nEnter username: ");
+            scanf("%s", username);
+        } else {
+            printf("\nLOGIN");
+            printf("\n\nUsername does not exist");
+            printf("\nEnter username: ");
+            scanf("%s", username);
+        }
+        i = 1;
+    } while (!getUserFromHashTable(table, username));
+    
     do
     {   
         if (i == 0) {

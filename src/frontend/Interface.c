@@ -30,6 +30,7 @@ int promptVisit(User *user, User *userV)
         scanf(" %[^\n]", prompt);
 
         if (prompt == "follow") {
+            follow(user, userV);
             break;
         } else {
             if (!strcmp(prompt, "return"))
@@ -51,8 +52,7 @@ void dashboardVisit(User *user, User *userV)
 {   
     do
     {   
-        printf("\n%s's profile", userV->username);
-        printf("\nTweets: %i", 1550);
+        printf("\n%s's profile  %s", userV->username, "seguido");
         printf("\nFollowing: %i", 123);
         printf("\nFollowers: %i", 9321);
         printf("\n");
