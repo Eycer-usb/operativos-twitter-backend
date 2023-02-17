@@ -59,7 +59,7 @@ int searchUser(char *username)
 void dashboard(User *user)
 {
     printf("\n@%s", user->username);
-    printf("\nTweets: %i", 1550);
+    printf("\nTweets: %i", user->tweetCount);
     printf("\nFollowing: %i", 123);
     printf("\nFollowers: %i", 9321);
     printf("\n");
@@ -83,7 +83,8 @@ int interface()
     {
         User *user;
         user = logger(&table);
-        if (user == NULL) {
+        if (user == NULL)
+        {
             break;
         }
         do
