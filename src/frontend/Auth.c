@@ -46,7 +46,6 @@ User logIn(HashTable* table)
 {
     char username[20];
     char password[20];
-    User user;
 
     do {
         clear();
@@ -57,10 +56,9 @@ User logIn(HashTable* table)
         scanf("%s", password);
 
     } while (!getUserFromHashTable(table, username));
-    initUser(&user, username, password);
-    addToHashTable(table, &user);
+   
 
-    return user;
+    return *getUserFromHashTable(table, username);
 }
 
 /**
