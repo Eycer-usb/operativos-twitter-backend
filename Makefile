@@ -91,6 +91,10 @@ $(TEMPDIR)/FormatTweet.o:	$(TEMPDIR) \
 					$(SRCDIR)/utils/formatTweet.h \
 					$(SRCDIR)/utils/FormatTweet.c
 	$(COMPILE) $(SRCDIR)/utils/FormatTweet.c -o $(TEMPDIR)/FormatTweet.o
+$(TEMPDIR)/SearchMentions.o:	$(TEMPDIR) \
+					$(SRCDIR)/utils/searchMentions.h \
+					$(SRCDIR)/utils/SearchMentions.c
+	$(COMPILE) $(SRCDIR)/utils/SearchMentions.c -o $(TEMPDIR)/SearchMentions.o
 
 # The main Function
 $(TEMPDIR)/Main.o: 	$(TEMPDIR)\
