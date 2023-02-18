@@ -5,9 +5,13 @@
 #include <stdio.h>
 #include <time.h>
 
-/*
-Initializate a List Node
-*/
+/**
+ * Initializes a linked list.
+ * Inputs:
+ *  - list: a pointer to a List structure to be initialized
+ * Outputs:
+ *  - none
+ */
 int initList(List *list)
 {
     list->owner = NULL;
@@ -16,9 +20,14 @@ int initList(List *list)
     list->time = -1;
 }
 
-/*
-Add a node List at the start of the old List
-*/
+/**
+ * Inserts a new element at the beginning of the linked list pointed by old.
+ * @param old The pointer to the head of the linked list to be modified.
+ * @param content The pointer to the content of the new element to be inserted.
+ * @param time The time value associated with the new element.
+ * @param owner The string identifying the owner of the new element.
+ * @return The pointer to the new head of the modified linked list.
+ */
 List *listPush(List *old, ListContent *content, time_t time, char *owner)
 {
     List *new = (List *)malloc(sizeof(List));
@@ -29,9 +38,13 @@ List *listPush(List *old, ListContent *content, time_t time, char *owner)
     return new;
 };
 
-/*
-Given a List store Datetime formated in buffer
-*/
+/**
+ * Given a pointer to a linked list node `list` and a character buffer `buffer`,
+ * fills `buffer` with the formatted string representing the time stored in
+ * `list->time`. The time is formatted as "dd-mm-yyyy hh:mm:ss".
+ *
+ * Returns 1 on success and 0 if `list` is NULL.
+ */
 int getSavedDateTime(List *list, char *buffer)
 {
     if (list == NULL)
@@ -47,10 +60,12 @@ int getSavedDateTime(List *list, char *buffer)
     return 1;
 }
 
-/*
-Given a list, printlist will print element by element including
-the ENDLIST node
-*/
+/**
+ * Print the contents of a linked list of tweets.
+ *
+ * @param list The list to be printed.
+ * @return void
+ */
 void printList(List *list)
 {
     List *i = list;
@@ -75,11 +90,13 @@ void printList(List *list)
     }
 }
 
-/*
-Given a List pointer and a pointer to the pointer of a second list
-It will store in the outListPtr the result of merge both descending ordered by time list
-into one unique descending ordered by time list
-*/
+/**
+ * Merges two linked lists of tweets in time order into one new linked list.
+ *
+ * @param oneList      A pointer to the first linked list to be merged, sorted in time order
+ * @param outListPtr   A pointer to a pointer to the second linked list to be merged, sorted in time order
+ * @return             1 if the merge was successful, 0 otherwise
+ */
 int mergeListByTimeOrder(List *oneList, List **outListPtr)
 {
 

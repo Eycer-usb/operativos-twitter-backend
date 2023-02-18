@@ -13,9 +13,16 @@ The members are:
 #include "hashtable.h"
 #include "./../utils/searchMentions.h"
 
-/*
-Initializate User Struct
-*/
+/**
+ *
+ * Initializes a new User object with the given parameters, and initializes the
+ * user's follow, follower, tweets, and mention Lists with initList().
+ * @param user A pointer to the User object to be initialized.
+ * @param username A pointer to the string containing the user's username.
+ * @param password A pointer to the string containing the user's password.
+ * @param description A pointer to the string containing the user's description.
+ * @return Returns 1 if initialization is successful, 0 otherwise.
+ */
 int initUser(User *user, char *username, char *password, char *description)
 {
     // Tails Definition
@@ -37,28 +44,37 @@ int initUser(User *user, char *username, char *password, char *description)
     return 1;
 }
 
-/*
-Given a user and a password. The password is hashed and
-set as password.
-*/
+/**
+ * Sets the password of the user by generating a hash from the given string.
+ *
+ * @param user      Pointer to the User struct
+ * @param password  String representing the password
+ */
 void setPassword(User *user, char *password)
 {
     user->password = hashFun(password);
 }
 
-/*
-Given a user and a password. Return 1 if the password
-corresponds to the stored hashed password, and 0 otherwise.
-*/
+/**
+ * Verifies whether the provided password matches the user's password.
+ *
+ * @param user      Pointer to the User struct
+ * @param password  String representing the password to verify
+ * @return          1 if the password is correct, 0 otherwise
+ */
 int verifyPassword(User *user, char password[20])
 {
     long int hashed = hashFun(password);
     return (*user).password == hashed;
 }
 
-/*
-Add the followed to the follow list of the follower
-*/
+/**
+ * Follows a user by updating the corresponding lists and counters.
+ *
+ * @param follower  Pointer to the follower User struct
+ * @param followed  Pointer to the followed User struct
+ * @return          1 if the operation was successful, 0 if the follower is already following the followed
+ */
 int follow(User *follower, User *followed)
 {
     /* Verifying if the followed user is already being followed */
@@ -90,9 +106,13 @@ int follow(User *follower, User *followed)
 }
 
 /*
-Add a new tweet to the user tweet list
-*/
-// WIP
+ * Adds a new tweet to the tweets list of the given user.
+ *
+ * @param user: pointer to a User struct that represents the user who created the tweet
+ * @param text: pointer to the string that contains the text of the tweet
+ *
+ * @return: 1 if the tweet was successfully added to the list, 0 otherwise
+ */
 int newTweet(User *user, char *text)
 {
     ListContent *content = (ListContent *)malloc(sizeof(ListContent));
@@ -106,10 +126,16 @@ int newTweet(User *user, char *text)
 }
 
 /*
-Add mentions
-*/
+ * Adds a new mention to the mentions list of the given user.
+ *
+ * @param userOwner: pointer to a User struct that represents the user who created the tweet that mentioned the other user
+ * @param user: pointer to a User struct that represents the user who was mentioned in the tweet
+ * @param text: pointer to the string that contains the text of the tweet
+ *
+ * @return: 1 if the mention was successfully added to the list, 0 otherwise
+ */
 int newMention(User *userOwner, User *user, char *text)
-{      
+{
     ListContent *content = (ListContent *)malloc(sizeof(ListContent));
     char *owner = userOwner->username;
     content->text = (char *)malloc(sizeof(char) * 280);
@@ -117,9 +143,14 @@ int newMention(User *userOwner, User *user, char *text)
     user->mentions = listPush(user->mentions, content, time(NULL), owner);
     return 1;
 }
+
 /*
-Return the Timeline of tweets to the given user
-*/
+ * Returns a list with the tweets of the given user and the tweets of the users he/she follows, sorted by time.
+ *
+ * @param user: pointer to a User struct that represents the user whose timeline will be returned
+ *
+ * @return: pointer to a List struct that contains the tweets sorted by time, or NULL if an error occurred
+ */
 List *getUserTimeLine(User *user)
 {
     /*  Memory alocation to store the merged list */

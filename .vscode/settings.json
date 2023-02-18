@@ -16,6 +16,7 @@
         "streambuf": "cpp",
         "utility": "cpp",
         "*.tcc": "c",
-        "searchmentions.h": "c"
+        "searchmentions.h": "c",
+        "stdlib.h": "c"
     }
 }
