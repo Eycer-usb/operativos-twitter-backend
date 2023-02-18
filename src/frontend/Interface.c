@@ -6,6 +6,10 @@
 #include "./../utils/searchMentions.h"
 #define clear() printf("\033[H\033[J");
 
+/**
+ * Prints the user's timeline to the console.
+ * @param user The user whose timeline will be shown.
+ */
 void timeline(User *user)
 {
     printf("\033[0;36m");
@@ -31,6 +35,10 @@ void timeline(User *user)
     printList(timeline);
 }
 
+/**
+ * Prints the list of users that the given user is following.
+ * @param user The user whose following list will be shown.
+ */
 void printFollowing(User *user)
 {
     if (user->follows == NULL)
@@ -51,6 +59,10 @@ void printFollowing(User *user)
     }
 }
 
+/**
+ * Prints the list of users that follow the given user.
+ * @param user The user whose list of followers will be shown.
+ */
 void printFollowers(User *user)
 {
     if (user->followedBy == NULL)
@@ -71,6 +83,12 @@ void printFollowers(User *user)
     }
 }
 
+/**
+ * Prompts the user to visit another user's profile and displays options to follow, see the following list or the followers list.
+ * @param user The user who is visiting the other user's profile.
+ * @param userVisited The user whose profile is being visited.
+ * @return 0 if the user wants to continue, -1 if the user wants to return to the previous page.
+ */
 int promptVisit(User *user, User *userVisited)
 {
     int should_continue = 0;
@@ -78,7 +96,7 @@ int promptVisit(User *user, User *userVisited)
     while (!should_continue)
     {
         char prompt[281];
-
+        printf("\nYou can either 'follow' or 'return' to the previous page.\n\n");
         printf("\033[0;31mPrompt: ");
         printf("\033[0;37m");
         scanf(" %[^\n]", prompt);
@@ -114,7 +132,11 @@ int promptVisit(User *user, User *userVisited)
     clear();
     return should_continue;
 }
-
+/**
+ * Display the dashboard of a visited user and allows the user to interact with it.
+ * @param user The user who is currently logged in and visiting another user's dashboard.
+ * @param userVisited The user whose dashboard is being visited.
+ */
 void dashboardVisit(User *user, User *userVisited)
 {
     do
@@ -134,6 +156,14 @@ void dashboardVisit(User *user, User *userVisited)
     } while (promptVisit(user, userVisited) != -1);
 }
 
+/**
+ * Prompts the user for an action and handles it accordingly.
+ *
+ * @param user          The user currently logged in.
+ * @param table         The hash table containing all registered users.
+ *
+ * @return              -1 if the user wants to log out, 0 otherwise.
+ */
 int prompt(User *user, HashTable *table)
 {
     int should_continue = 0;
@@ -182,7 +212,7 @@ int prompt(User *user, HashTable *table)
             break;
         default:
             if (!strcmp(prompt, "mentions"))
-            {   
+            {
                 clear();
                 printf("\nList mentions\n\n");
                 printList(user->mentions);
@@ -218,15 +248,16 @@ int prompt(User *user, HashTable *table)
     return should_continue;
 }
 
-int searchUser(char *username)
-{
-
-    // strcmp()
-}
-
-/**
- * This function allows the user to see the GUI and interact with the differents Auth
- * and twitter options.
+/*
+ * interface - handles the main menu and user interface of the program
+ *
+ * This function initializes the hash table to store the registered users and
+ * enters a loop where the user can log in, view their timeline, and interact with
+ * the system by sending tweets, searching for other users, and viewing their own
+ * followers and following list.
+ *
+ * Returns:
+ * - nothing, the function runs indefinitely until the program is terminated
  */
 int interface()
 {

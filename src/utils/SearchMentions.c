@@ -5,7 +5,17 @@
 #include "./../backend/hashtable.h"
 #include "./../backend/user.h"
 
-void searchAtWords(HashTable* table, User* owner, char *str)
+/**
+ * Given a HashTable, an owner User and a string, this function searches the string
+ * for any words starting with '@' and creates a new mention in the owner User's mentions
+ * list for each User that matches a word. The mention consists of the original string and a
+ * reference to the User mentioned.
+ *
+ * @param table A pointer to the HashTable to search for mentioned Users.
+ * @param owner A pointer to the User who made the original tweet.
+ * @param str The string to search for mentions.
+ */
+void searchAtWords(HashTable *table, User *owner, char *str)
 {
     char *tweet = (char *)malloc(280 * sizeof(char));
     char *token;
@@ -16,13 +26,11 @@ void searchAtWords(HashTable* table, User* owner, char *str)
     {
         if (token[0] == '@')
         {
-            /* Aquí se implementa el proceso de agregar los mentions.  */
             memmove(token, token + 1, strlen(token));
             printf("token %s\n\n\n", token);
             printf("encontrado %s\n\n\n", getUserFromHashTable(table, token)->username);
             newMention(owner, getUserFromHashTable(table, token), str);
             printf("Palabra encontrada: %s\n", token);
-            //return getUserFromHashTable(table, token);
         }
         token = strtok(NULL, delimiter);
     }

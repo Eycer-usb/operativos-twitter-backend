@@ -72,7 +72,7 @@ User *logIn(HashTable *table)
             printf("\033[0;32m");
             printf("\nLOGIN");
             printf("\033[0m");
-            printf("\n\nEnter username: ");
+            printf("\n\nEnter username (or type 'back' to return to the main menu): ");
             scanf("%s", username);
         }
         else
@@ -81,7 +81,7 @@ User *logIn(HashTable *table)
             printf("\nLOGIN");
             printf("\033[0m");
             printf("\n\nUsername does not exist");
-            printf("\nEnter username: ");
+            printf("\nEnter username (or type 'back' to return to the main menu): ");
             scanf("%s", username);
         }
         i = 1;
