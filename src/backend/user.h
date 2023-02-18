@@ -12,6 +12,7 @@ struct User
     char description[161];
     int tweetCount;
     List *tweets;
+    List *mentions;
     List *follows;
     List *followedBy;
     int followersCount;
@@ -23,6 +24,7 @@ void setPassword(User *user, char *password);
 int verifyPassword(User *user, char *password);
 int follow(User *follower, User *followed);
 int newTweet(User *user, char *text);
+int newMention(User *userOwner, User *user, char *text);
 List *getUserTimeLine(User *user);
 
 #endif

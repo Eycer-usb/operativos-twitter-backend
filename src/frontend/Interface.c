@@ -3,6 +3,7 @@
 #include "./../backend/user.h"
 #include "./../backend/hashtable.h"
 #include "auth.h"
+#include "./../utils/searchMentions.h"
 #define clear() printf("\033[H\033[J");
 
 void timeline(User *user)
@@ -155,6 +156,8 @@ int prompt(User *user, HashTable *table)
         case '+':
             memmove(prompt, prompt + 1, strlen(prompt));
             newTweet(user, prompt);
+            searchAtWords(table, user, prompt);
+            printf("saliendo de atwords");
             printf("Tweet enviado\n");
             should_continue = 1;
             clear();
@@ -177,9 +180,14 @@ int prompt(User *user, HashTable *table)
             }
             should_continue = 1;
             break;
-
         default:
-            if (!strcmp(prompt, "logout"))
+            if (!strcmp(prompt, "mentions"))
+            {   
+                clear();
+                printf("\nList mentions\n\n");
+                printList(user->mentions);
+            }
+            else if (!strcmp(prompt, "logout"))
             {
                 printf("Logout\n");
                 should_continue = -1;

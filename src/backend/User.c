@@ -11,6 +11,7 @@ The members are:
 #include <string.h>
 #include "user.h"
 #include "hashtable.h"
+#include "./../utils/searchMentions.h"
 
 /*
 Initializate User Struct
@@ -21,6 +22,7 @@ int initUser(User *user, char *username, char *password, char *description)
     user->follows = (List *)malloc(sizeof(List));
     user->followedBy = (List *)malloc(sizeof(List));
     user->tweets = (List *)malloc(sizeof(List));
+    user->mentions = (List *)malloc(sizeof(List));
     user->password = -1;
     user->tweetCount = 0;
     user->followersCount = 0;
@@ -28,6 +30,7 @@ int initUser(User *user, char *username, char *password, char *description)
     initList(user->follows);
     initList(user->followedBy);
     initList(user->tweets);
+    initList(user->mentions);
     strcpy(user->username, username);
     strcpy(user->description, description);
     setPassword(user, password);
@@ -102,6 +105,18 @@ int newTweet(User *user, char *text)
     return 1;
 }
 
+/*
+Add mentions
+*/
+int newMention(User *userOwner, User *user, char *text)
+{      
+    ListContent *content = (ListContent *)malloc(sizeof(ListContent));
+    char *owner = userOwner->username;
+    content->text = (char *)malloc(sizeof(char) * 280);
+    strcpy(content->text, text);
+    user->mentions = listPush(user->mentions, content, time(NULL), owner);
+    return 1;
+}
 /*
 Return the Timeline of tweets to the given user
 */

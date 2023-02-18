@@ -3,6 +3,7 @@
 
 #include "./../backend/user.h"
 #include "./../backend/hashtable.h"
+#include "./../utils/searchMentions.h"
 
 void printImage(User user);
 void timeline(User *user, HashTable *table);
